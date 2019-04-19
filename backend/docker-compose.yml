@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_PASSWORD: EventosDit
     ports:
-      - "5432:5432"
+      - "5433:5432"
   pgadmin:
     image: dpage/pgadmin4
     links:

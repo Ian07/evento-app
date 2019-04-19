@@ -1,3 +1,10 @@
 from django.db import models
 
-# Create your models here.
+class Encuentro(models.Model):
+    pass
+
+class Clase(models.Model):
+    pass
+
+class Charla(models.Model):
+    pass
