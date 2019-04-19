@@ -120,9 +120,6 @@ class Rol(models.Model):
         """ Método de clase para registrar TIPOS """
         cls.TIPOS.append((klass.TIPO, klass.__name__.lower()))
 
-    class Meta:
-        abstract = True
-
 class Alumno(Rol):
     """ Modelo de rol de Alumno. """
     TIPO = 1
