@@ -1,5 +1,6 @@
 """Aqui se definen los modelos correspondientes a los participantes """
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 class Persona(models.Model):
     """
@@ -129,7 +130,7 @@ class Alumno(Rol):
         db_table = 'alumnos'
 
 class Profesor(Rol):
-    """ Modelo de rol de Alumno. """
+    """ Modelo de rol de Profesor. """
     TIPO = 2
     ROLNAME = "Profesor"
 
@@ -137,7 +138,7 @@ class Profesor(Rol):
         db_table = 'profesores'
 
 class Disertante(Rol):
-    """ Modelo de rol de Alumno. """
+    """ Modelo de rol de Disertante. """
     TIPO = 3
     ROLNAME = "Disertante"
 
@@ -145,12 +146,20 @@ class Disertante(Rol):
         db_table = 'disertantes'
 
 class Organizador(Rol):
-    """ Modelo de rol de Alumno. """
+    """ Modelo de rol de Organizador. """
     TIPO = 4
     ROLNAME = "Organizador"
 
     class Meta:
         db_table = 'organizadores'
+
+class Usuario(Rol, AbstractUser):
+    """ Modelo de rol de Usuario. """
+    TIPO = 5
+    ROLNAME = "Usuario"
+
+    class Meta:
+        db_table = 'usuarios'
 
 for Klass in Rol.__subclasses__():
     Rol.register(Klass)
