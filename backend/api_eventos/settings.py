@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'participantes',
+    'cursos'
 ]
 
 MIDDLEWARE = [
@@ -80,7 +81,7 @@ DATABASES = {
         'NAME':'db_eventos',
         'USER': 'postgres',
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'EventosDit'),
-        'HOST': 'db',
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': '5432',
     }
 }
