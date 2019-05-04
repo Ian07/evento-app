@@ -5,8 +5,8 @@ from participantes.models import Profesor, Disertante, Alumno
 class Curso(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(max_length=800)
-    profesores = models.ManyToManyField(Profesor)
-    alumnos = models.ManyToManyField(Alumno)
+    profesores = models.ManyToManyField(Profesor, related_name="cursos", db_table="curso_profesor")
+    alumnos = models.ManyToManyField(Alumno, related_name="cursos", db_table="curso_alumnos")
 
     class Meta:
         db_table = 'cursos'
@@ -22,12 +22,13 @@ class Encuentro(models.Model):
 
 class Clase(Encuentro):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='clases')
+    presentes = models.ManyToManyField(Alumno, related_name="asistencias", db_table="asistencias")
 
     class Meta:
         db_table = 'clases'
 
 class Charla(Encuentro):
-    disertantes = models.ManyToManyField(Disertante)
+    disertantes = models.ManyToManyField(Disertante, related_name="charlas", db_table="charla_disertante")
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(max_length=800)
 
