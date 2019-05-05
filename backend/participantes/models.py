@@ -1,6 +1,6 @@
 """Aqui se definen los modelos correspondientes a los participantes """
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class Persona(models.Model):
     """
@@ -69,6 +69,9 @@ class Persona(models.Model):
         """
         return any([isinstance(rol, klass) for rol in self.roles_related()])
 
+    class Meta:
+        db_table = 'personas'
+
 class Rol(models.Model):
     """
     Modelo genérico para la gestión de roles de participantes.
@@ -121,6 +124,9 @@ class Rol(models.Model):
         """ Método de clase para registrar TIPOS """
         cls.TIPOS.append((klass.TIPO, klass.__name__.lower()))
 
+    class Meta:
+        db_table = 'roles'
+
 class Alumno(Rol):
     """ Modelo de rol de Alumno. """
     TIPO = 1
@@ -153,10 +159,68 @@ class Organizador(Rol):
     class Meta:
         db_table = 'organizadores'
 
+class CustomUserManager(BaseUserManager):
+
+    def crear_usuario(self, username, password, persona):
+
+        user = self.model(
+            username = username,
+            persona = persona,
+            first_name = persona.nombre,
+            last_name = persona.apellido,
+            email = persona.email
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, username, password):
+
+        user = self.model(
+            username = username
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, password, persona):
+
+        user = self.create_user(
+            username = username,
+            password = password,
+            persona = persona,
+            first_name = persona.nombre,
+            last_name = persona.apellido,
+            email = persona.email
+        )
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password):
+
+        user = self.create_user(
+            username = username,
+            password = password
+        )
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
+        user.is_admin = True
+        user.save(using=self._db)
+        return user
+
 class Usuario(Rol, AbstractUser):
     """ Modelo de rol de Usuario. """
     TIPO = 5
     ROLNAME = "Usuario"
+
+    objects = CustomUserManager()
 
     class Meta:
         db_table = 'usuarios'
