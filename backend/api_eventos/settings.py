@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'participantes',
     'cursos'
 ]
@@ -127,3 +128,13 @@ STATIC_URL = '/static/'
 
 # Variable que apunta al modelo que sirve como usuario del proyecto
 AUTH_USER_MODEL = 'participantes.Usuario'
+
+REST_FRAMEWORK = {
+    # Cuando activas el versionado de una API, el atributo request.version continene
+    # un cadena que corresponde a la versión requerida en la request del cliente.
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    # La clase que usamos para conectarnos
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
