@@ -19,15 +19,6 @@ class Persona(models.Model):
         """
         return f"{self.nombre} {self.apellido}"
 
-    def save(self, *args, **kwargs):
-        # pylint: disable=W0221
-        """
-        Metodo que permite modificar el proceso de guardado.
-        """
-        if Persona.objects.filter(documento=self.documento).exists():
-            raise Exception("La persona ya se encuentra registrada")
-        super(Persona, self).save(*args, **kwargs)
-
     def como(self, klass):
         """ 
         Retorna una instancia de un rol asociado a una persona con la ayuda 
