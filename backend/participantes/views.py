@@ -1,9 +1,32 @@
 from rest_framework import generics
-from participantes.models import Persona
-from participantes.serializers import PersonaSerializer
+from participantes.models import Persona, Profesor
+from participantes.serializers import PersonaSerializer, ProfesorSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
 from rest_framework.response import Response
+
+
+class ListCreateProfesorView(generics.ListCreateAPIView):
+    """
+    GET profesores/
+    POST profesor/
+    """
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        persona = Persona.objects.get(
+            documento=request.data["documento"],
+        )
+        nuevo_profesor = Profesor.objects.create(
+            persona = persona
+        )
+        return Response(
+            data=ProfesorSerializer(nuevo_profesor).data,
+            status=status.HTTP_201_CREATED
+        )
+
 
 class ListCreatePersonasView(generics.ListCreateAPIView):
     """
