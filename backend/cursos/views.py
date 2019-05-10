@@ -1,5 +1,6 @@
 from rest_framework import generics
 from cursos.models import Curso
+from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador
 from cursos.serializers import CursoSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
@@ -16,12 +17,20 @@ class ListCreateCursosView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        nueva_curso = Curso.objects.create(
-            nombre=request.data["nombre"],
-            descripcion=request.data["descripcion"],
-            #profesores=request.data["profesores"]
+        profesor = Profesor.objects.get(
+            persona=request.data["documento_profesor"],
         )
+        alumno = Alumno.objects.get(
+            persona=request.data["documento_alumno"],
+        )
+        nuevo_curso = Curso.objects.create(
+            nombre=request.data["nombre"],
+            descripcion=request.data["descripcion"]
+        )
+        nuevo_curso.profesores.add(profesor)
+        nuevo_curso.alumnos.add(alumno)
+            
         return Response(
-            data=CursoSerializer(nueva_curso).data,
+            data=CursoSerializer(nuevo_curso).data,
             status=status.HTTP_201_CREATED
         )
