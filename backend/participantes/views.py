@@ -161,6 +161,6 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
                     "error": f"No existe la persona con el documento {kwargs['documento']}.",
                 },
                 status=status.HTTP_404_NOT_FOUND
-)
+            )
 
 
