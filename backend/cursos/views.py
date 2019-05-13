@@ -17,18 +17,31 @@ class ListCreateCursosView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        profesor = Profesor.objects.get(
-            persona=request.data["documento_profesor"],
-        )
-        alumno = Alumno.objects.get(
-            persona=request.data["documento_alumno"],
-        )
         nuevo_curso = Curso.objects.create(
             nombre=request.data["nombre"],
             descripcion=request.data["descripcion"]
         )
-        nuevo_curso.profesores.add(profesor)
-        nuevo_curso.alumnos.add(alumno)
+        try:
+            if request.POST.get('documento_profesor'):
+                profesor = Profesor.objects.get(persona=request.data["documento_profesor"])
+                nuevo_curso.profesores.add(profesor)
+            if request.POST.get('documento_alumno'):
+                alumno = Alumno.objects.get(persona=request.data["documento_alumno"])
+                nuevo_curso.alumnos.add(alumno)
+        except Profesor.DoesNotExist:    
+            return Response(
+                data={
+                    "error": f"No existe el profesor con documento '{request.data['documento_profesor']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Alumno.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe el alumno con documento '{request.data['documento_alumno']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
             
         return Response(
             data=CursoSerializer(nuevo_curso).data,
@@ -52,24 +65,48 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Curso.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe el curso con id {kwargs['id']}.",
+                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
-            )
+            ) 
 
     def put(self, request, *args, **kwargs):
         try:
             curso = self.queryset.get(id=kwargs["id"])
             serializer = CursoSerializer()
             curso_modificado = serializer.update(curso, request.data)
+
+            if request.POST.get('documento_profesor'):
+                alumno = Alumno.objects.get(persona=request.data["documento_profesor"])
+                curso_modificado.alumnos.add(alumno)
+
+            if request.POST.get('documento_alumno'):
+                alumno = Alumno.objects.get(persona=request.data["documento_alumno"])
+                curso_modificado.alumnos.add(alumno)  
+
             return Response(CursoSerializer(curso_modificado).data)
+
         except Curso.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe el curso con id {kwargs['id']}.",
+                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+        except Profesor.DoesNotExist:    
+            return Response(
+                data={
+                    "error": f"No existe el profesor con documento '{request.data['documento_profesor']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Alumno.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe el alumno con documento: '{request.data['documento_alumno']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
 
     def delete(self, request, *args, **kwargs):
         try:
@@ -79,7 +116,7 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Curso.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe el curso con id {kwargs['id']}.",
+                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )    

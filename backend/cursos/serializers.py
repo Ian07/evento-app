@@ -4,4 +4,4 @@ from cursos.models import Curso
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Curso
-        fields = ("nombre", "descripcion", "profesores", "alumnos")
+        fields = ("id", "nombre", "descripcion", "profesores", "alumnos")

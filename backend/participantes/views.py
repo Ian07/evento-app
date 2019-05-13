@@ -16,9 +16,15 @@ class ListCreateAlumnoView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        persona = Persona.objects.get(
-            documento=request.data["documento"],
-        )
+        try:
+            persona = Persona.objects.get(documento=request.data["documento"])
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
         nuevo_alumno = Alumno.objects.create(
             persona = persona
         )
@@ -38,9 +44,15 @@ class ListCreateProfesorView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        persona = Persona.objects.get(
-            documento=request.data["documento"],
-        )
+        try:
+            persona = Persona.objects.get(documento=request.data["documento"])
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
         nuevo_profesor = Profesor.objects.create(
             persona = persona
         )
@@ -60,9 +72,15 @@ class ListCreateDisertanteView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        persona = Persona.objects.get(
-            documento=request.data["documento"],
-        )
+        try:
+            persona = Persona.objects.get(documento=request.data["documento"])
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
         nuevo_disertante = Disertante.objects.create(
             persona = persona
         )
@@ -82,9 +100,15 @@ class ListCreateOrganizadorView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, *args, **kwargs):
-        persona = Persona.objects.get(
-            documento=request.data["documento"],
-        )
+        try:
+            persona = Persona.objects.get(documento=request.data["documento"])
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
         nuevo_organizador = Organizador.objects.create(
             persona = persona
         )
@@ -114,6 +138,7 @@ class ListCreatePersonasView(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+
 class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET personas/:documento/
@@ -131,7 +156,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -145,7 +170,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -158,7 +183,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )

@@ -10,7 +10,7 @@ class PersonaSerializer(serializers.ModelSerializer):
 class AlumnoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alumno
-        fields = ("TIPO", "ROLNAME", "persona")
+        fields = ("TIPO", "ROLNAME", "persona",)
 
 
 class ProfesorSerializer(serializers.ModelSerializer):
