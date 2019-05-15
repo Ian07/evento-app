@@ -10,23 +10,23 @@ class PersonaSerializer(serializers.ModelSerializer):
 class AlumnoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Alumno
-        fields = ("TIPO", "ROLNAME", "persona",)
+        fields = ("id", "TIPO", "ROLNAME", "persona",)
 
 
 class ProfesorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profesor
-        fields = ("TIPO", "ROLNAME", "persona")
+        fields = ("id", "TIPO", "ROLNAME", "persona")
 
 
 class DisertanteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Disertante
-        fields = ("TIPO", "ROLNAME", "persona")
+        fields = ("id", "TIPO", "ROLNAME", "persona")
 
 
 class OrganizadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organizador
-        fields = ("TIPO", "ROLNAME", "persona")
+        fields = ("id", "TIPO", "ROLNAME", "persona")
 
