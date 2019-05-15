@@ -1,5 +1,6 @@
 from django.urls import path
-from participantes.views import ListCreatePersonasView, PersonaDetailView, ListCreateAlumnoView, ListCreateProfesorView, ListCreateDisertanteView, ListCreateOrganizadorView
+from participantes.views.personas import *
+from participantes.views.roles import *
 
 
 urlpatterns = [
