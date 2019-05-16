@@ -13,5 +13,7 @@ urlpatterns = [
     path('disertantes/', ListCreateDisertanteView.as_view(), name="disertantes-list-create"),
     path('disertantes/<int:documento>/', DisertanteDetailView.as_view(), name="disertantes-detail"),
     path('organizadores/', ListCreateOrganizadorView.as_view(), name="organizadores-list-create"),
-    path('organizadores/<int:documento>/', OrganizadorDetailView.as_view(), name="organizadores-detail")
+    path('organizadores/<int:documento>/', OrganizadorDetailView.as_view(), name="organizadores-detail"),
+    path('usuarios/', ListCreateUsuarioView.as_view(), name="usuarios-list-create"),
+    path('usuarios/<int:documento>/', UsuariorDetailView.as_view(), name="usuarios-detail")
 ]

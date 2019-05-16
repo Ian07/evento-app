@@ -12,87 +12,87 @@
 | Método | URI                                | Descripción                                              | Realizado          | 
 |--------|------------------------------------|----------------------------------------------------------|--------------------|
 | GET    | /personas/{documento}/alumnos      | Devuelve todos los alumnos asociados a esa persona       |         ?          |
-| GET    | /personas/{documento}/alumnos/{id} | Devuelve informacion de un alumno asociado a esa persona |                    |
+| GET    | /personas/{documento}/alumnos/{id} | Devuelve informacion de un alumno asociado a esa persona |         si         |
 | POST   | /personas/{documento}/alumnos      | Agrega un rol de alumno a la persona asociada            |         si         |
 | PUT    | /personas/{documento}/alumnos/{id} | Modifica información del alumno asociado a esa persona   |                    |
-| DELETE | /personas/{documento}/alumnos/{id} | Borra el rol alumno asociado a esa persona               |                    |
+| DELETE | /personas/{documento}/alumnos/{id} | Borra el rol alumno asociado a esa persona               |         si         |
 
 | Método | URI                                   | Descripción                                                | Realizado          |
 |--------|---------------------------------------|------------------------------------------------------------|--------------------|
 | GET    | /personas/{documento}/profesores      | Devuelve todos los profesores asociados a esa persona      |                    |
-| GET    | /personas/{documento}/profesores/{id} | Devuelve informacion de un profesor asociado a esa persona |                    |
+| GET    | /personas/{documento}/profesores/{id} | Devuelve informacion de un profesor asociado a esa persona |         si         |
 | POST   | /personas/{documento}/profesores      | Agrega un rol de profesor a la persona asociada            |         si         |
 | PUT    | /personas/{documento}/profesores/{id} | Modifica información del profesor asociado a esa persona   |                    |
-| DELETE | /personas/{documento}/profesores/{id} | Borra el rol profesor asociado a esa persona               |                    |
+| DELETE | /personas/{documento}/profesores/{id} | Borra el rol profesor asociado a esa persona               |         si         |
 
 | Método | URI                                    | Descripción                                                  | Realizado          |
 |--------|----------------------------------------|--------------------------------------------------------------|--------------------|
 | GET    | /personas/{documento}/disertantes      | Devuelve todos los disertantes asociados a esa persona       |                    |
-| GET    | /personas/{documento}/disertantes/{id} | Devuelve informacion de un disertante asociado a esa persona |                    |
+| GET    | /personas/{documento}/disertantes/{id} | Devuelve informacion de un disertante asociado a esa persona |        si          |
 | POST   | /personas/{documento}/disertantes      | Agrega un rol de disertante a la persona asociada            |        si          |
 | PUT    | /personas/{documento}/disertantes/{id} | Modifica información del disertante asociado a esa persona   |                    |
-| DELETE | /personas/{documento}/disertantes/{id} | Borra el rol disertante asociado a esa persona               |                    |
+| DELETE | /personas/{documento}/disertantes/{id} | Borra el rol disertante asociado a esa persona               |        si          |
 
 | Método | URI                                      | Descripción                                                   | Realizado          |
 |--------|------------------------------------------|---------------------------------------------------------------|--------------------|
 | GET    | /personas/{documento}/organizadores      | Devuelve todos los organizadores asociados a esa persona      |                    |
-| GET    | /personas/{documento}/organizadores/{id} | Devuelve informacion de un organizador asociado a esa persona |                    |
-| POST   | /personas/{documento}/organizadores      | Agrega un rol de organizador a la persona asociada            |        si          |
+| GET    | /personas/{documento}/organizadores/{id} | Devuelve informacion de un organizador asociado a esa persona |       si           |
+| POST   | /personas/{documento}/organizadores      | Agrega un rol de organizador a la persona asociada            |       si           |
 | PUT    | /personas/{documento}/organizadores/{id} | Modifica información del organizador asociado a esa persona   |                    |
-| DELETE | /personas/{documento}/organizadores/{id} | Borra el rol organizador asociado a esa persona               |                    |
+| DELETE | /personas/{documento}/organizadores/{id} | Borra el rol organizador asociado a esa persona               |       si           |
 
 | Método | URI                                 | Descripción                                               | Realizado          |
 |--------|-------------------------------------|-----------------------------------------------------------|--------------------|
 | GET    | /personas/{documento}/usuarios      | Devuelve todos los usuarios asociados a esa persona       |                    |
-| GET    | /personas/{documento}/usuarios/{id} | Devuelve informacion de un usuario asociado a esa persona |                    |
-| POST   | /personas/{documento}/usuarios      | Agrega un usuario a la persona asociada                   |                    |
+| GET    | /personas/{documento}/usuarios/{id} | Devuelve informacion de un usuario asociado a esa persona |        si          |
+| POST   | /personas/{documento}/usuarios      | Agrega un usuario a la persona asociada                   |        si          |
 | PUT    | /personas/{documento}/usuarios/{id} | Modifica información de un usuario asociado a esa persona |                    |
-| DELETE | /personas/{documento}/usuarios/{id} | Borra el usuario asociado a esa persona                   |                    |
+| DELETE | /personas/{documento}/usuarios/{id} | Borra el usuario asociado a esa persona                   |        si          |
 
 
 ## Alumnos
 | Método | URI            | Descripción                        | Realizado          |
 |--------|----------------|------------------------------------|--------------------|
 | GET    | /alumnos       | Devuelve todos los alumnos         |         si         |
-| GET    | /alumnos/{id}  | Devuelve informacion de un alumno  |         si         |
+| GET    | /alumnos/{id}  | Devuelve informacion de un alumno  |                    | *lo estamos haciendo con el doc*
 | POST   | /alumnos       | Crea un nuevo alumno               |         si         |
 | PUT    | /alumnos/{id}  | Modifica información de un alumno  |                    |
-| DELETE | /alumnos/{id}  | Borra el alumno                    |         si         |
+| DELETE | /alumnos/{id}  | Borra el alumno                    |                    |
 
 ## Profesores
 | Método | URI               | Descripción                         | Realizado          |
 |--------|-------------------|-------------------------------------|--------------------|
 | GET    | /profesores       | Devuelve todos los profesores       |        si          |
-| GET    | /profesores/{id}  | Devuelve informacion de un profesor |        si          |
+| GET    | /profesores/{id}  | Devuelve informacion de un profesor |                    |
 | POST   | /profesores       | Crea un profesor                    |        si          |
 | PUT    | /profesores/{id}  | Modifica información de un profesor |                    |
-| DELETE | /profesores/{id}  | Borra el profesor                   |        si          |
+| DELETE | /profesores/{id}  | Borra el profesor                   |                    |
 
 ## Disertantes
 | Método | URI               | Descripción                           | Realizado          |
 |--------|-------------------|---------------------------------------|--------------------|
 | GET    | /diserantes       | Devuelve todos los diserantes         |        si          |
-| GET    | /diserantes/{id}  | Devuelve informacion de un disertante |        si          |
+| GET    | /diserantes/{id}  | Devuelve informacion de un disertante |                    |
 | POST   | /disertantes      | Crea un disertante                    |        si          |
 | PUT    | /diserantes/{id}  | Modifica información de un disertante |                    |
-| DELETE | /diserantes/{id}  | Borra el disertante                   |        si          |
+| DELETE | /diserantes/{id}  | Borra el disertante                   |                    |
 
 
 ## Organizadores
 | Método | URI                  | Descripción                            | Realizado          |
 |--------|----------------------|----------------------------------------|--------------------|
 | GET    | /organizadores       | Devuelve todos los organizadores       |         si         |
-| GET    | /organizadores/{id}  | Devuelve informacion de un organizador |         si         |
+| GET    | /organizadores/{id}  | Devuelve informacion de un organizador |                    |
 | POST   | /organizadores       | Crea un organizador                    |         si         |
 | PUT    | /organizadores/{id}  | Modifica información de un organizador |                    |
-| DELETE | /organizadores/{id}  | Borra el organizador                   |         si         |
+| DELETE | /organizadores/{id}  | Borra el organizador                   |                    |
 
 ## Usuarios
 | Método | URI            | Descripción                        | Realizado          |
 |--------|----------------|------------------------------------|--------------------|
-| GET    | /usuarios      | Devuelve todos los usuarios        |                    |
+| GET    | /usuarios      | Devuelve todos los usuarios        |       si           |
 | GET    | /usuarios/{id} | Devuelve informacion de un usuario |                    |
-| POST   | /usuarios      | Crea un usuario                    |                    |
+| POST   | /usuarios      | Crea un usuario                    |       si           |
 | PUT    | /usuarios/{id} | Modifica información de un usuario |                    |
 | DELETE | /usuarios/{id} | Borra el usuario                   |                    |
 

@@ -1,6 +1,6 @@
 from rest_framework import generics
-from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador
-from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer
+from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador, Usuario
+from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer, UsuarioSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
 from rest_framework.response import Response
@@ -9,7 +9,7 @@ from rest_framework.response import Response
 class ListCreateAlumnoView(generics.ListCreateAPIView):
     """
     GET alumnos/
-    POST alumno/
+    POST alumnos/
     """
     queryset = Alumno.objects.all()
     serializer_class = AlumnoSerializer
@@ -17,7 +17,7 @@ class ListCreateAlumnoView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            persona = Persona.objects.get(documento=request.data["documento"])
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
         except Persona.DoesNotExist:
             return Response(
                 data={
@@ -26,7 +26,7 @@ class ListCreateAlumnoView(generics.ListCreateAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         nuevo_alumno = Alumno.objects.create(
-            persona = persona
+            persona = obj_persona
         )
         return Response(
             data=AlumnoSerializer(nuevo_alumno).data,
@@ -88,7 +88,7 @@ class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ListCreateProfesorView(generics.ListCreateAPIView):
     """
     GET profesores/
-    POST profesor/
+    POST profesores/
     """
     queryset = Profesor.objects.all()
     serializer_class = ProfesorSerializer
@@ -96,7 +96,7 @@ class ListCreateProfesorView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            persona = Persona.objects.get(documento=request.data["documento"])
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
         except Persona.DoesNotExist:
             return Response(
                 data={
@@ -105,7 +105,7 @@ class ListCreateProfesorView(generics.ListCreateAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         nuevo_profesor = Profesor.objects.create(
-            persona = persona
+            persona = obj_persona
         )
         return Response(
             data=ProfesorSerializer(nuevo_profesor).data,
@@ -167,7 +167,7 @@ class ProfesorDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ListCreateDisertanteView(generics.ListCreateAPIView):
     """
     GET disertantes/
-    POST disertante/
+    POST disertantes/
     """
     queryset = Disertante.objects.all()
     serializer_class = DisertanteSerializer
@@ -175,7 +175,7 @@ class ListCreateDisertanteView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            persona = Persona.objects.get(documento=request.data["documento"])
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
         except Persona.DoesNotExist:
             return Response(
                 data={
@@ -184,7 +184,7 @@ class ListCreateDisertanteView(generics.ListCreateAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         nuevo_disertante = Disertante.objects.create(
-            persona = persona
+            persona = obj_persona
         )
         return Response(
             data=DisertanteSerializer(nuevo_disertante).data,
@@ -246,7 +246,7 @@ class DisertanteDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ListCreateOrganizadorView(generics.ListCreateAPIView):
     """
     GET organizadores/
-    POST organizador/
+    POST organizadores/
     """
     queryset = Organizador.objects.all()
     serializer_class = OrganizadorSerializer
@@ -254,7 +254,7 @@ class ListCreateOrganizadorView(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            persona = Persona.objects.get(documento=request.data["documento"])
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
         except Persona.DoesNotExist:
             return Response(
                 data={
@@ -263,7 +263,7 @@ class ListCreateOrganizadorView(generics.ListCreateAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
         nuevo_organizador = Organizador.objects.create(
-            persona = persona
+            persona = obj_persona
         )
         return Response(
             data=OrganizadorSerializer(nuevo_organizador).data,
@@ -317,6 +317,85 @@ class OrganizadorDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response(
                 data={
                     "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Organizador.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
+class ListCreateUsuarioView(generics.ListCreateAPIView):
+    """
+    GET usuarios/
+    POST usuarios/
+    """
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        nuevo_usuario = Usuario.objects.create(
+            persona = obj_persona
+        )
+        return Response(
+            data=UsuarioSerializer(nuevo_usuario).data,
+            status=status.HTTP_201_CREATED
+        )
+
+
+class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET usuarios/:documento/
+    DELETE usuarios/:documento/
+    """
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            usuario = self.queryset.get(persona=obj_persona)
+            return Response(UsuarioSerializer(usuario).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Usuario.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Usuario.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            usuario = self.queryset.get(persona=obj_persona)
+            usuario.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Usuario.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Usuario.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
