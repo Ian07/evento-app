@@ -1,9 +1,10 @@
 from rest_framework import generics
 from cursos.models import Clase, Curso
 from participantes.models import *
+from participantes.serializers import ProfesorSerializer, AlumnoSerializer
 from cursos.serializers import  ClaseSerializer
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import status
+from rest_framework.views import status, APIView
 from rest_framework.response import Response
 
 
@@ -117,3 +118,14 @@ class ClaseDetailView(generics.RetrieveUpdateDestroyAPIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             ) 
+
+
+class AlumnosPresentesList(APIView):
+    """
+    GET clases/:id/alumnos_presentes
+    """
+    def get(self, request, *args, **kwargs):
+        id_clase = kwargs['id']
+        id_presentes = Clase.objects.filter(id=id_clase).values_list('presentes', flat=True)
+        presentes = Alumno.objects.filter(id__in=id_presentes)
+        return Response(AlumnoSerializer(presentes, many=True).data)

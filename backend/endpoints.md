@@ -122,7 +122,7 @@
 
 | Método | URI                     | Descripción                                 | Realizado          |
 |--------|-------------------------|---------------------------------------------|--------------------|
-| GET    | /clases/{id}/presentes  | Devuelve los alumnos presentes en la clase  |                    |
+| GET    | /clases/{id}/presentes  | Devuelve los alumnos presentes en la clase  |         si         |
 
 ## Charla
 | Método | URI          | Descripción                         | Realizado          |
@@ -135,4 +135,4 @@
 
 | Método | URI                       | Descripción                           | Realizado          |
 |--------|---------------------------|---------------------------------------|--------------------|
-| GET    | /charlas/{id}/disertantes | Devuelve los disertantes de la charla |                    |
+| GET    | /charlas/{id}/disertantes | Devuelve los disertantes de la charla |          si        |

@@ -1,9 +1,10 @@
 from rest_framework import generics
 from cursos.models import Charla
 from participantes.models import *
+from participantes.serializers import DisertanteSerializer
 from cursos.serializers import CharlaSerializer
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import status
+from rest_framework.views import status, APIView
 from rest_framework.response import Response
 
 
@@ -112,3 +113,14 @@ class CharlaDetailView(generics.RetrieveUpdateDestroyAPIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             ) 
+
+
+class DisertantesList(APIView):
+    """
+    GET charlas/:id/disertantes
+    """
+    def get(self, request, *args, **kwargs):
+        id_charla = kwargs['id']
+        id_disertantes = Charla.objects.filter(id=id_charla).values_list('disertantes', flat=True)
+        disertantes = Disertante.objects.filter(id__in=id_disertantes)
+        return Response(DisertanteSerializer(disertantes, many=True).data)
