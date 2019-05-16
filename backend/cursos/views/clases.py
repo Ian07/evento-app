@@ -1,5 +1,5 @@
 from rest_framework import generics
-from cursos.models import Clase
+from cursos.models import Clase, Curso
 from participantes.models import *
 from cursos.serializers import  ClaseSerializer
 from rest_framework.permissions import IsAuthenticated

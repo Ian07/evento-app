@@ -107,9 +107,9 @@
 
 | Método | URI                     | Descripción                       | Realizado          |
 |--------|-------------------------|-----------------------------------|--------------------|
-| GET    | /cursos/{id}/profesores | Devuelve los profesores del curso |                    |
-| GET    | /cursos/{id}/alumnos    | Devuelve los alumnos del curso    |                    |
-| GET    | /cursos/{id}/clases     | Devuelve las clases del curso     |                    |
+| GET    | /cursos/{id}/profesores | Devuelve los profesores del curso |       si           |
+| GET    | /cursos/{id}/alumnos    | Devuelve los alumnos del curso    |       si           |
+| GET    | /cursos/{id}/clases     | Devuelve las clases del curso     |       si           |
 
 ## Clases
 | Método | URI          | Descripción                       | Realizado          |

@@ -1,9 +1,10 @@
 from rest_framework import generics
-from cursos.models import Curso
+from cursos.models import Curso, Clase
 from participantes.models import *
-from cursos.serializers import CursoSerializer
+from cursos.serializers import CursoSerializer, ClaseSerializer
+from participantes.serializers import ProfesorSerializer, AlumnoSerializer
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import status
+from rest_framework.views import status, APIView
 from rest_framework.response import Response
 
 
@@ -129,3 +130,36 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )    
+
+
+class ProfesoresList(APIView):
+    """
+    GET cursos/:id/profesores
+    """
+    def get(self, request, *args, **kwargs):
+        id_curso = kwargs['id']
+        id_profesores = Curso.objects.filter(id=id_curso).values_list('profesores', flat=True)
+        profesores = Profesor.objects.filter(id__in=id_profesores)
+        return Response(ProfesorSerializer(profesores, many=True).data)
+
+
+class AlumnosList(APIView):
+    """
+    GET cursos/:id/alumnos
+    """
+    def get(self, request, *args, **kwargs):
+        id_curso = kwargs['id']
+        id_alumnos = Curso.objects.filter(id=id_curso).values_list('alumnos', flat=True)
+        alumnos = Alumno.objects.filter(id__in=id_alumnos)
+        return Response(AlumnoSerializer(alumnos, many=True).data)
+        
+
+class ClasesList(APIView):
+    """
+    GET cursos/:id/clases
+    """
+    def get(self, request, *args, **kwargs):
+        id_curso = kwargs['id']
+        id_clases = Curso.objects.filter(id=id_curso).values_list('clases', flat=True)
+        clases = Clase.objects.filter(id__in=id_clases)
+        return Response(ClaseSerializer(clases, many=True).data)
