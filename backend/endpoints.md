@@ -54,38 +54,38 @@
 | Método | URI            | Descripción                        | Realizado          |
 |--------|----------------|------------------------------------|--------------------|
 | GET    | /alumnos       | Devuelve todos los alumnos         |         si         |
-| GET    | /alumnos/{id}  | Devuelve informacion de un alumno  |                    |
+| GET    | /alumnos/{id}  | Devuelve informacion de un alumno  |         si         |
 | POST   | /alumnos       | Crea un nuevo alumno               |         si         |
 | PUT    | /alumnos/{id}  | Modifica información de un alumno  |                    |
-| DELETE | /alumnos/{id}  | Borra el alumno                    |                    |
+| DELETE | /alumnos/{id}  | Borra el alumno                    |         si         |
 
 ## Profesores
 | Método | URI               | Descripción                         | Realizado          |
 |--------|-------------------|-------------------------------------|--------------------|
 | GET    | /profesores       | Devuelve todos los profesores       |        si          |
-| GET    | /profesores/{id}  | Devuelve informacion de un profesor |                    |
+| GET    | /profesores/{id}  | Devuelve informacion de un profesor |        si          |
 | POST   | /profesores       | Crea un profesor                    |        si          |
 | PUT    | /profesores/{id}  | Modifica información de un profesor |                    |
-| DELETE | /profesores/{id}  | Borra el profesor                   |                    |
+| DELETE | /profesores/{id}  | Borra el profesor                   |        si          |
 
 ## Disertantes
 | Método | URI               | Descripción                           | Realizado          |
 |--------|-------------------|---------------------------------------|--------------------|
 | GET    | /diserantes       | Devuelve todos los diserantes         |        si          |
-| GET    | /diserantes/{id}  | Devuelve informacion de un disertante |                    |
+| GET    | /diserantes/{id}  | Devuelve informacion de un disertante |        si          |
 | POST   | /disertantes      | Crea un disertante                    |        si          |
 | PUT    | /diserantes/{id}  | Modifica información de un disertante |                    |
-| DELETE | /diserantes/{id}  | Borra el disertante                   |                    |
+| DELETE | /diserantes/{id}  | Borra el disertante                   |        si          |
 
 
 ## Organizadores
 | Método | URI                  | Descripción                            | Realizado          |
 |--------|----------------------|----------------------------------------|--------------------|
 | GET    | /organizadores       | Devuelve todos los organizadores       |         si         |
-| GET    | /organizadores/{id}  | Devuelve informacion de un organizador |                    |
+| GET    | /organizadores/{id}  | Devuelve informacion de un organizador |         si         |
 | POST   | /organizadores       | Crea un organizador                    |         si         |
 | PUT    | /organizadores/{id}  | Modifica información de un organizador |                    |
-| DELETE | /organizadores/{id}  | Borra el organizador                   |                    |
+| DELETE | /organizadores/{id}  | Borra el organizador                   |         si         |
 
 ## Usuarios
 | Método | URI            | Descripción                        | Realizado          |
