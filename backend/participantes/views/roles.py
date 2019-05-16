@@ -1,5 +1,5 @@
 from rest_framework import generics
-from participantes.models import Alumno, Profesor, Disertante, Organizador
+from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador
 from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
@@ -34,6 +34,57 @@ class ListCreateAlumnoView(generics.ListCreateAPIView):
         )
 
 
+class AlumnoDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET alumnos/:documento/
+    DELETE alumnos/:documento/
+    """
+    queryset = Alumno.objects.all()
+    serializer_class = AlumnoSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            alumno = self.queryset.get(persona=obj_persona)
+            return Response(AlumnoSerializer(alumno).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Alumno.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Alumno.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            alumno = self.queryset.get(persona=obj_persona)
+            alumno.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Alumno.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Alumno.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
 class ListCreateProfesorView(generics.ListCreateAPIView):
     """
     GET profesores/
@@ -60,6 +111,57 @@ class ListCreateProfesorView(generics.ListCreateAPIView):
             data=ProfesorSerializer(nuevo_profesor).data,
             status=status.HTTP_201_CREATED
         )
+
+
+class ProfesorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET profesores/:documento/
+    DELETE profesores/:documento/
+    """
+    queryset = Profesor.objects.all()
+    serializer_class = ProfesorSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            profesor = self.queryset.get(persona=obj_persona)
+            return Response(ProfesorSerializer(profesor).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Profesor.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Profesor.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            profesor = self.queryset.get(persona=obj_persona)
+            profesor.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Profesor.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Profesor.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class ListCreateDisertanteView(generics.ListCreateAPIView):
@@ -90,6 +192,57 @@ class ListCreateDisertanteView(generics.ListCreateAPIView):
         )
 
 
+class DisertanteDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET disertantes/:documento/
+    DELETE disertantes/:documento/
+    """
+    queryset = Disertante.objects.all()
+    serializer_class = DisertanteSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            disertante = self.queryset.get(persona=obj_persona)
+            return Response(DisertanteSerializer(disertante).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Disertante.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Disertante.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            disertante = self.queryset.get(persona=obj_persona)
+            disertante.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Disertante.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Disertante.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+
 class ListCreateOrganizadorView(generics.ListCreateAPIView):
     """
     GET organizadores/
@@ -116,3 +269,54 @@ class ListCreateOrganizadorView(generics.ListCreateAPIView):
             data=OrganizadorSerializer(nuevo_organizador).data,
             status=status.HTTP_201_CREATED
         )
+
+
+class OrganizadorDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    GET organizadores/:documento/
+    DELETE organizadores/:documento/
+    """
+    queryset = Organizador.objects.all()
+    serializer_class = OrganizadorSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            organizador = self.queryset.get(persona=obj_persona)
+            return Response(OrganizadorSerializer(organizador).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Organizador.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Organizador.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            organizador = self.queryset.get(persona=obj_persona)
+            organizador.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Organizador.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Organizador.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
