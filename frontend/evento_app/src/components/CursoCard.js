@@ -14,11 +14,11 @@ class CursoCard extends React.Component {
       <CardActionArea>
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
+          alt="Curso {this.props.nombreCurso}"
           className="classes.media"
           height="140"
           image="/images/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
+          title="Curso {this.props.nombreCurso}"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
