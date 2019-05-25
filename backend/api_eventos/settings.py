@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -130,11 +131,16 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'participantes.Usuario'
 
 REST_FRAMEWORK = {
-    # Cuando activas el versionado de una API, el atributo request.version continene
+    # Cuando activas el versionado de una API, el atributo request.version contiene
     # un cadena que corresponde a la versión requerida en la request del cliente.
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     # La clase que usamos para conectarnos
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=620),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }

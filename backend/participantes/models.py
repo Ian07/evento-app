@@ -75,7 +75,7 @@ class Rol(models.Model):
     ]
 
     tipo = models.PositiveSmallIntegerField(choices=TIPOS)
-    persona = models.ForeignKey(
+    persona = models.ForeignKey( #TODO seria un One to One ????
         Persona,
         related_name="roles",
         on_delete=models.CASCADE,

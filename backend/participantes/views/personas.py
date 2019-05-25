@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
 from rest_framework.response import Response
 
+
 class ListCreatePersonasView(generics.ListCreateAPIView):
     """
     GET personas/
@@ -25,6 +26,7 @@ class ListCreatePersonasView(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+
 class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     GET personas/:documento/
@@ -42,7 +44,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -56,7 +58,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -69,9 +71,7 @@ class PersonaDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Persona.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe la persona con el documento {kwargs['documento']}.",
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
-)
-
-
+            )
