@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -9,36 +7,25 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const styles = {
-  card: {
-    maxWidth: '100%',
-  },
-  media: {
-    // ⚠️ object-fit is not supported by IE 11.
-    objectFit: 'cover',
-  },
-};
-
-function ImgMediaCard(props) {
-  const { classes } = props;
-  return (
-    <Card className={classes.card}>
+class CursoCard extends React.Component {
+  
+  render() {
+    return (<Card className="Card">
       <CardActionArea>
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
-          className={classes.media}
+          className="classes.media"
           height="140"
           image="/images/contemplative-reptile.jpg"
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {this.props.nombreCurso}
           </Typography>
           <Typography component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            {this.props.descripcion}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -50,12 +37,8 @@ function ImgMediaCard(props) {
           Learn More
         </Button>
       </CardActions>
-    </Card>
-  );
+    </Card>);
+  };
 }
 
-ImgMediaCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ImgMediaCard);
+export default CursoCard;

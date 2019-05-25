@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ImgMediaCard from './Card';
+import CursoCard from './CursoCard';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { Hidden } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -24,16 +22,10 @@ function CenteredGrid(props) {
     <div className={classes.root} style={{padding:24}}>
       <Grid container spacing={24} >
         <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
+          <CursoCard nombreCurso="Curso de Linux" descripcion="Super Curso"/>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <ImgMediaCard />
-        </Grid>
-        <Grid item xs={6}>
-          <ImgMediaCard />
+          <CursoCard nombreCurso="Curso de Seguridad" descripcion="Super Curso"/>
         </Grid>
       </Grid>
     </div>
