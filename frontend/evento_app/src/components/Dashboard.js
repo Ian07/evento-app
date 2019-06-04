@@ -18,9 +18,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
 
 function MadeWithLove() {
   return (
@@ -117,7 +114,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -141,7 +138,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            Escuela de Informática 2019
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -151,7 +148,7 @@ export default function Dashboard() {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="permanent"
+        variant="temporary"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
@@ -174,19 +171,19 @@ export default function Dashboard() {
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                <Chart />
+                Hola Perrito
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                Hola Gatito
               </Paper>
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                Hola orden
               </Paper>
             </Grid>
           </Grid>
