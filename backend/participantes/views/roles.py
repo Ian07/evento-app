@@ -1,8 +1,8 @@
 from rest_framework import generics
 from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador, Usuario
-from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer, UsuarioSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import status
+from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer, UsuarioSerializer, UsuarioSerializerconToken
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.views import status, APIView
 from rest_framework.response import Response
 
 
@@ -349,6 +349,21 @@ class ListCreateUsuarioView(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+class UserList(APIView):
+    """
+    Crea un nuevo usuario. Se usa para Signup
+
+    mas información en: https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+    """
+
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        serializer = UsuarioSerializerconToken(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
