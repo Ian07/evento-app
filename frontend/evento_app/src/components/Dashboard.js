@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,11 +14,11 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
+import BarraLateral from './BarraLateral';
 import Home from './Home';
 import Curso from './Curso';
 import Profesor from './Profesor';
-import { Route, NavLink, HashRouter } from 'react-router-dom';
+import { Route, HashRouter } from 'react-router-dom';
 
 function MadeWithLove() {
   return (
@@ -117,13 +116,13 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => {
+  const abrirDrawer = () => {
     setOpen(true);
   };
-  const handleDrawerClose = () => {
+  const cerrarDrawer = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
 
   return (
     <div className={classes.root}>
@@ -134,7 +133,7 @@ export default function Dashboard() {
             edge="start"
             color="inherit"
             aria-label="Open drawer"
-            onClick={handleDrawerOpen}
+            onClick={abrirDrawer}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             <MenuIcon />
@@ -158,14 +157,12 @@ export default function Dashboard() {
           open={open}
         >
           <div className={classes.toolbarIcon}>
-            <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={cerrarDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
+          <BarraLateral cerrarDrawer={cerrarDrawer}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
