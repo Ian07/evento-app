@@ -186,8 +186,15 @@ export default function Dashboard(props) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
-      <NavLink to="/registrarse"><MenuItem onClick={handleMenuClose}>Registrarse</MenuItem></NavLink>
+      {props.estaLogueado ?
+        <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
+      : 
+        <div>
+          <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
+          <NavLink to="/registrarse"><MenuItem onClick={handleMenuClose}>Registrarse</MenuItem></NavLink>
+        </div>
+      }
+      
     </Menu>
   );
 
@@ -219,7 +226,7 @@ export default function Dashboard(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Usuario</p>
       </MenuItem>
     </Menu>
   );
@@ -296,7 +303,7 @@ export default function Dashboard(props) {
             <Route exact path="/" component={Home}/>
             <Route path="/cursos" component={Curso}/>
             <Route path="/profesores" component={Profesor}/>
-            <Route path="/iniciar_sesion" component={SignIn}/>
+            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
             <Route path="/registrarse" component={SignUp}/>
           </Container>
           <Firma />
