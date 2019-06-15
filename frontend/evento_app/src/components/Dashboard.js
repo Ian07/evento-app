@@ -10,24 +10,38 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import BarraLateral from './BarraLateral';
-import Home from './Home';
+import SignIn from './basic_auth/SignIn';
+import SignUp from './basic_auth/SignUp';
 import Curso from './Curso';
 import Profesor from './Profesor';
+import Home from './Home';
 import { Route, HashRouter } from 'react-router-dom';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import { NavLink } from 'react-router-dom';
 
-function MadeWithLove() {
+function Firma() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
+      {'Desarrollado por '}
+      <Link color="inherit" href="https://github.com/matiasacosta/">
+        Matias Acosta
       </Link>
-      {' team.'}
+      {' e '}
+      <Link color="inherit" href="https://github.com/Ian07/">
+        Ian Mazzaglia
+      </Link>
+      {' utilizando '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Material UI
+      </Link>
     </Typography>
   );
 }
@@ -35,6 +49,9 @@ function MadeWithLove() {
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1,
+  },
   root: {
     display: 'flex',
   },
@@ -64,13 +81,13 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: 1,
   },
   menuButtonHidden: {
     display: 'none',
   },
   title: {
-    flexGrow: 1,
+    
   },
   drawerPaper: {
     position: 'relative',
@@ -111,9 +128,21 @@ const useStyles = makeStyles(theme => ({
   fixedHeight: {
     height: 240,
   },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
 }));
 
-export default function Dashboard() {
+export default function Dashboard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const abrirDrawer = () => {
@@ -123,32 +152,129 @@ export default function Dashboard() {
     setOpen(false);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function handleProfileMenuOpen(event) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleMobileMenuClose() {
+    setMobileMoreAnchorEl(null);
+  }
+
+  function handleMenuClose() {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  }
+
+  function handleMobileMenuOpen(event) {
+    setMobileMoreAnchorEl(event.currentTarget);
+  }
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
+      <NavLink to="/registrarse"><MenuItem onClick={handleMenuClose}>Registrarse</MenuItem></NavLink>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton aria-label="Show 11 new notifications" color="inherit">
+          <Badge badgeContent={11} color="secondary">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="Account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <div className={classes.root}>
+      <HashRouter>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="Open drawer"
+            aria-label="Abrir drawer"
             onClick={abrirDrawer}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+          <Typography variant="h6" color="inherit" noWrap className={classes.title}>
             Escuela de Informática 2019
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <IconButton aria-label="Show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="Account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="Show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
-      <HashRouter>
+      {renderMobileMenu}
+      {renderMenu}
         <Drawer
           variant="temporary"
           classes={{
@@ -170,8 +296,10 @@ export default function Dashboard() {
             <Route exact path="/" component={Home}/>
             <Route path="/cursos" component={Curso}/>
             <Route path="/profesores" component={Profesor}/>
+            <Route path="/iniciar_sesion" component={SignIn}/>
+            <Route path="/registrarse" component={SignUp}/>
           </Container>
-          <MadeWithLove />
+          <Firma />
         </main>
       </HashRouter>  
     </div>
