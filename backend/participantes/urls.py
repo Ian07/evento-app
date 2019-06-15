@@ -16,5 +16,6 @@ urlpatterns = [
     path('organizadores/<int:documento>/', OrganizadorDetailView.as_view(), name="organizadores-detail"),
     path('usuarios/', ListCreateUsuarioView.as_view(), name="usuarios-list-create"),
     path('usuarios/<int:documento>/', UsuariorDetailView.as_view(), name="usuarios-detail"),
-    path('registrar_usuario/', UserList.as_view())
+    path('registrar_usuario/', UserList.as_view()),
+    path('usuario_actual/', usuario_actual)
 ]

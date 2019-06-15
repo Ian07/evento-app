@@ -3,6 +3,7 @@ from participantes.models import Persona, Alumno, Profesor, Disertante, Organiza
 from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer, UsuarioSerializer, UsuarioSerializerconToken
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import status, APIView
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
@@ -348,6 +349,15 @@ class ListCreateUsuarioView(generics.ListCreateAPIView):
             data=UsuarioSerializer(nuevo_usuario).data,
             status=status.HTTP_201_CREATED
         )
+
+@api_view(['GET'])
+def usuario_actual(request, *args, **kwargs):
+    """
+    Determina el usuario a partir de su token
+    """
+    
+    serializer = UsuarioSerializer(request.user)
+    return Response(serializer.data)
 
 class UserList(APIView):
     """

@@ -19,7 +19,7 @@ class App extends Component {
     if(this.state.logged_in){
       /* si estamos logueados vamos a traernos a un usuario de
       la base, en este caso, yo tengo a Matias, pero podria ser cualquier cosa */
-      fetch('http://localhost:8000/api/v1/usuarios/38804362/',{
+      fetch('http://localhost:8000/api/v1/usuario_actual/',{
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -27,7 +27,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        this.setState({username: 'nombre'})
+        this.setState({username: json.username})
       })
     }
   }
