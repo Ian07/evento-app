@@ -22,7 +22,7 @@ import SignIn from './basic_auth/SignIn';
 import SignUp from './basic_auth/SignUp';
 import Curso from './Curso';
 import Profesor from './Profesor';
-import Home from './Home';
+import Inicio from './Inicio';
 import { Route, HashRouter } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
@@ -309,7 +309,7 @@ export default function Dashboard(props) {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
-            <Route exact path="/" component={Home}/>
+            <Route exact path="/" component={Inicio}/>
             <Route path="/cursos" component={Curso}/>
             <Route path="/profesores" component={Profesor}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
