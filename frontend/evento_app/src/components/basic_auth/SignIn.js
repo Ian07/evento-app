@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,6 +38,10 @@ const useStyles = makeStyles(theme => ({
 export default function SignIn(props) {
   const classes = useStyles();
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -48,7 +52,7 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Iniciar Sesión
         </Typography>
-        <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username':'matias','password':'EventosDit'})}>
+        <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username': username,'password': password})}>
           <TextField
             type="text"
             variant="outlined"
@@ -57,8 +61,9 @@ export default function SignIn(props) {
             fullWidth
             id="username"
             label="Nombre de Usuario"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             name="username"
-            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -66,11 +71,12 @@ export default function SignIn(props) {
             margin="normal"
             required
             fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             name="password"
             label="Contraseña"
             type="password"
             id="password"
-            autoComplete="current-password"
           />
           <Button
             type="submit"

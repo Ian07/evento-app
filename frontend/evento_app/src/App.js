@@ -42,14 +42,13 @@ class App extends Component {
       .then(json => {
         localStorage.setItem('token', json.access);
         this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.username //falta que el api-token devuelva el nombre de usuario
+          estaLogueado: true,
+          nombreUsuario: json.username //falta que el api-token devuelva el nombre de usuario
         });
       });
   };
 
-  handle_signup = (e, data) => {
+  handleSignup = (e, data) => {
     e.preventDefault();
     fetch('http://localhost:8000/api/v1/registrar_usuario/', {
       method: 'POST',
@@ -62,16 +61,15 @@ class App extends Component {
       .then(json => {
         localStorage.setItem('token', json.token.access);
         this.setState({
-          logged_in: true,
-          displayed_form: '',
-          username: json.username
+          estaLogueado: true,
+          nombreUsuario: json.username
         });
       });
   };
 
-  handle_logout = () => {
+  handleLogout = () => {
     localStorage.removeItem('token');
-    this.setState({ logged_in: false, username: '' });
+    this.setState({ estaLogueado: false, nombreUsuario: '' });
   };
 
   render(){
@@ -79,8 +77,8 @@ class App extends Component {
     estaLogueado={this.state.estaLogueado} 
     nombreUsuario={this.state.nombreUsuario}
     handleLogin={this.handleLogin}
-    handle_signup={this.handle_signup}
-    handle_logout={this.handle_logout}
+    handleSignup={this.handleSignup}
+    handleLogout={this.handleLogout}
     />
   }
 }

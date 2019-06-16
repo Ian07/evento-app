@@ -187,7 +187,7 @@ export default function Dashboard(props) {
       onClose={handleMenuClose}
     >
       {props.estaLogueado ?
-        <MenuItem onClick={handleMenuClose}>Cerrar Sesión</MenuItem>
+        <MenuItem>Cerrar Sesión</MenuItem>
       : 
         <div>
           <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
@@ -226,7 +226,11 @@ export default function Dashboard(props) {
         >
           <AccountCircle />
         </IconButton>
-        <p>Usuario</p>
+        {props.estaLogueado ?
+          <p>{props.nombreUsuario}</p>
+          :
+          <p>Usuario</p>
+        }
       </MenuItem>
     </Menu>
   );
@@ -266,6 +270,11 @@ export default function Dashboard(props) {
             >
               <AccountCircle />
             </IconButton>
+            {props.estaLogueado ?
+              <p>{props.nombreUsuario}</p>
+              :
+              <p>Usuario</p>
+            }
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
