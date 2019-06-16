@@ -187,7 +187,7 @@ export default function Dashboard(props) {
       onClose={handleMenuClose}
     >
       {props.estaLogueado ?
-        <MenuItem>Cerrar Sesión</MenuItem>
+        <MenuItem onClick={ () => {handleMenuClose() ; props.handleLogout()}}>Cerrar Sesión</MenuItem>
       : 
         <div>
           <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
