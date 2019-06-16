@@ -7,6 +7,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status, APIView
 from rest_framework.response import Response
 
+class AutenticacionSoloPost(IsAuthenticated):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
+        return super(AutenticacionSoloPost, self).has_permission(request, view)
 
 class ListCreateCursosView(generics.ListCreateAPIView):
     """
@@ -15,7 +20,7 @@ class ListCreateCursosView(generics.ListCreateAPIView):
     """
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AutenticacionSoloPost,)
 
     def post(self, request, *args, **kwargs):
         nuevo_curso = Curso.objects.create(
