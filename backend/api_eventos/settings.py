@@ -128,6 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Variable que apunta al modelo que sirve como usuario del proyecto
 AUTH_USER_MODEL = 'participantes.Usuario'
@@ -147,7 +150,6 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
 }
-
 
 
 CORS_ORIGIN_WHITELIST = [

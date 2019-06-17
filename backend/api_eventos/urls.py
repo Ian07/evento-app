@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.conf.urls.static import static
+from django.conf import settings
 from rest_framework_simplejwt import views as jwt_views
 from api_eventos.views import MyTokenObtainPairView
 
@@ -24,4 +26,4 @@ urlpatterns = [
     re_path('api/(?P<version>(v1|v2))/', include('cursos.urls')),
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
