@@ -53,48 +53,71 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="nombre"
+                name="nombre"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="nombre"
+                label="Nombre"
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                autoComplete="apellido"
+                name="apellido"
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                id="apellido"
+                label="Apellido"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="documento"
+                name="documento"
+                variant="outlined"
+                required
+                fullWidth
+                id="documento"
+                label="Documento"
+                type="number"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="email"
+                name="email"
                 variant="outlined"
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                label="Correo Electrónico"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                autoComplete="username"
+                name="username"
                 variant="outlined"
                 required
                 fullWidth
+                id="username"
+                label="Nombre de Usuario"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="current-password"
                 name="password"
-                label="Password"
+                variant="outlined"
+                required
+                fullWidth
+                label="Contraseña"
                 type="password"
                 id="password"
-                autoComplete="current-password"
               />
             </Grid>
           </Grid>
