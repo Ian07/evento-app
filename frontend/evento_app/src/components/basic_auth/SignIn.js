@@ -60,7 +60,7 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Iniciar Sesión
         </Typography>
-        {props.errores && username !== ""  ?
+        {props.errores ?
           <Paper className={classes.root}>
             <Typography component="p" className={classes.errorTipo}>
               {props.errores}

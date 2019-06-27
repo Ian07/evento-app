@@ -8,7 +8,8 @@ class App extends Component {
     this.state = {
       estaLogueado: localStorage.getItem('token') ? true : false,
       nombreUsuario: '',
-      erroresLogin: false
+      erroresLogin: false,
+      erroresSignup: false
     };
   }
   
@@ -45,11 +46,12 @@ class App extends Component {
               localStorage.setItem('token', json.access);
               this.setState({
                 estaLogueado: true,
-                nombreUsuario: json.username //falta que el api-token devuelva el nombre de usuario
+                nombreUsuario: json.username, //falta que el api-token devuelva el nombre de usuario
+                erroresLogin: false
               });
             });
         } else { //no está autorizado
-          this.setState({erroresLogin: "Usuario no se encuentra registrado."})
+          this.setState({erroresLogin: "Sus credenciales son incorrectas o el usuario no se encuentra registrado."})
         }
       });
   };
@@ -75,7 +77,7 @@ class App extends Component {
           res.json();
         }else if(res.status === 409){ //Ya existe una persona con ese documento
           this.setState({
-            error: true,
+            erroresSignup: {documento: "Usted ya se encuentra inscripto para este evento"},
           });  
         }
       })
