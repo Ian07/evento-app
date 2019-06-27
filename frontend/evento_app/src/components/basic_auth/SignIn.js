@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -33,6 +34,13 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  root: {
+    padding: theme.spacing(3, 2),
+    backgroundColor: theme.palette.secondary.main
+  },
+  errorTipo: {
+    color: theme.palette.common.white
+  }
 }));
 
 export default function SignIn(props) {
@@ -52,6 +60,13 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Iniciar Sesión
         </Typography>
+        {props.errores && username !== ""  ?
+          <Paper className={classes.root}>
+            <Typography component="p" className={classes.errorTipo}>
+              {props.errores}
+            </Typography>
+          </Paper>:null
+        }
         <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username': username,'password': password})}>
           <TextField
             type="text"

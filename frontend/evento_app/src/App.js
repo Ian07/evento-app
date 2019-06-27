@@ -8,7 +8,7 @@ class App extends Component {
     this.state = {
       estaLogueado: localStorage.getItem('token') ? true : false,
       nombreUsuario: '',
-      error: false
+      erroresLogin: false
     };
   }
   
@@ -39,13 +39,18 @@ class App extends Component {
       },
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
-      .then(json => {
-        localStorage.setItem('token', json.access);
-        this.setState({
-          estaLogueado: true,
-          nombreUsuario: json.username //falta que el api-token devuelva el nombre de usuario
-        });
+      .then(res => {
+        if(res.status === 200){
+            res.json().then(json => {
+              localStorage.setItem('token', json.access);
+              this.setState({
+                estaLogueado: true,
+                nombreUsuario: json.username //falta que el api-token devuelva el nombre de usuario
+              });
+            });
+        } else { //no está autorizado
+          this.setState({erroresLogin: "Usuario no se encuentra registrado."})
+        }
       });
   };
 
@@ -102,6 +107,7 @@ class App extends Component {
     estaLogueado={this.state.estaLogueado} 
     nombreUsuario={this.state.nombreUsuario}
     handleLogin={this.handleLogin}
+    erroresLogin={this.state.erroresLogin}
     handleSignup={this.handleSignup}
     handleLogout={this.handleLogout}
     />
