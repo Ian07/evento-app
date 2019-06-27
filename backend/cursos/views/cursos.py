@@ -3,15 +3,10 @@ from cursos.models import Curso, Clase
 from participantes.models import *
 from cursos.serializers import CursoSerializer, ClaseSerializer
 from participantes.serializers import ProfesorSerializer, AlumnoSerializer
+from api_eventos.utils import AutenticacionSoloPost
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status, APIView
 from rest_framework.response import Response
-
-class AutenticacionSoloPost(IsAuthenticated):
-    def has_permission(self, request, view):
-        if request.method == 'GET':
-            return True
-        return super(AutenticacionSoloPost, self).has_permission(request, view)
 
 class ListCreateCursosView(generics.ListCreateAPIView):
     """

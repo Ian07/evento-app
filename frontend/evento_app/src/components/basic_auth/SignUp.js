@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -36,8 +36,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
+
+  const [nombre, setNombre] = useState('');
+  const [apellido, setApellido] = useState('');
+  const [documento, setDocumento] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <Container component="main" maxWidth="xs">
@@ -49,7 +56,18 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Registrarse
         </Typography>
-        <form className={classes.form} noValidate>
+        <form 
+          className={classes.form}
+          noValidate
+          onSubmit={e => props.handleSignup(e, {
+            'nombre': nombre,
+            'apellido':apellido,
+            'documento': documento,
+            'email': email,
+            'username': username,
+            'password': password
+          })}
+          >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -60,6 +78,8 @@ export default function SignUp() {
                 fullWidth
                 id="nombre"
                 label="Nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
                 autoFocus
               />
             </Grid>
@@ -72,6 +92,8 @@ export default function SignUp() {
                 fullWidth
                 id="apellido"
                 label="Apellido"
+                value={apellido}
+                onChange={(e) => setApellido(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -84,6 +106,8 @@ export default function SignUp() {
                 id="documento"
                 label="Documento"
                 type="number"
+                value={documento}
+                onChange={(e) => setDocumento(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -95,6 +119,8 @@ export default function SignUp() {
                 fullWidth
                 id="email"
                 label="Correo Electrónico"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,6 +132,8 @@ export default function SignUp() {
                 fullWidth
                 id="username"
                 label="Nombre de Usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -118,6 +146,8 @@ export default function SignUp() {
                 label="Contraseña"
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
           </Grid>

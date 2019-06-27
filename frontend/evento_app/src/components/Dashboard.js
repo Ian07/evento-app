@@ -313,7 +313,7 @@ export default function Dashboard(props) {
             <Route path="/cursos" component={Curso}/>
             <Route path="/profesores" component={Profesor}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
-            <Route path="/registrarse" component={SignUp}/>
+            <Route path="/registrarse" render={() => <SignUp handleSignup={props.handleSignup} error={props.error} />}/>
           </Container>
           <Firma />
         </main>

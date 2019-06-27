@@ -7,7 +7,8 @@ class App extends Component {
     super(props);
     this.state = {
       estaLogueado: localStorage.getItem('token') ? true : false,
-      nombreUsuario: ''
+      nombreUsuario: '',
+      error: false
     };
   }
   
@@ -48,22 +49,46 @@ class App extends Component {
       });
   };
 
-  handleSignup = (e, data) => {
+  handleSignup = (e, datos) => {
     e.preventDefault();
-    fetch('http://localhost:8000/api/v1/registrar_usuario/', {
+    let datosPersona = {
+      documento: datos.documento,
+      nombre: datos.nombre,
+      apellido: datos.apellido
+    }
+    delete datos.nombre;
+    delete datos.apellido;
+    fetch('http://localhost:8000/api/v1/personas/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(datosPersona)
     })
-      .then(res => res.json())
+      .then((res) => {
+        if (res.status === 201){ //Created
+          res.json();
+        }else if(res.status === 409){ //Ya existe una persona con ese documento
+          this.setState({
+            error: true,
+          });  
+        }
+      })
+      .then(() => {
+        fetch('http://localhost:8000/api/v1/registrar_usuario/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      }).then(res => res.json())
       .then(json => {
         localStorage.setItem('token', json.token.access);
         this.setState({
           estaLogueado: true,
           nombreUsuario: json.username
         });
+      });
       });
   };
 
