@@ -58,44 +58,26 @@ class App extends Component {
 
   handleSignup = (e, datos) => {
     e.preventDefault();
-    let datosPersona = {
-      documento: datos.documento,
-      nombre: datos.nombre,
-      apellido: datos.apellido
-    }
-    delete datos.nombre;
-    delete datos.apellido;
-    fetch('http://localhost:8000/api/v1/personas/', {
+    fetch('http://localhost:8000/api/v1/registrar_usuario/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(datosPersona)
-    })
-      .then((res) => {
-        if (res.status === 201){ //Created
-          res.json();
-        }else if(res.status === 409){ //Ya existe una persona con ese documento
-          this.setState({
-            erroresSignup: {documento: "Usted ya se encuentra inscripto para este evento"},
-          });  
-        }
-      })
-      .then(() => {
-        fetch('http://localhost:8000/api/v1/registrar_usuario/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datos)
-      }).then(res => res.json())
+      body: JSON.stringify(datos)
+    }).then(res => res.json())
       .then(json => {
-        localStorage.setItem('token', json.token.access);
-        this.setState({
-          estaLogueado: true,
-          nombreUsuario: json.username
-        });
-      });
+        if( ! json.error){
+          localStorage.setItem('token', json.token.access);
+          this.setState({
+            estaLogueado: true,
+            nombreUsuario: json.username,
+            erroresSignup: false
+          });
+        }else{
+          this.setState({
+            erroresSignup: json.error
+          });
+        }
       });
   };
 
@@ -111,6 +93,7 @@ class App extends Component {
     handleLogin={this.handleLogin}
     erroresLogin={this.state.erroresLogin}
     handleSignup={this.handleSignup}
+    erroresSignup={this.state.erroresSignup}
     handleLogout={this.handleLogout}
     />
   }

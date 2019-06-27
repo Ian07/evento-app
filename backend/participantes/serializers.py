@@ -45,9 +45,6 @@ class UsuarioSerializerconToken(serializers.ModelSerializer):
     """
 
     token = serializers.SerializerMethodField()
-    password = serializers.CharField(write_only=True)
-    email = serializers.EmailField()
-    documento = serializers.IntegerField()
 
     def get_token(self, user):
         tokens = RefreshToken.for_user(user)
@@ -59,16 +56,6 @@ class UsuarioSerializerconToken(serializers.ModelSerializer):
         }
         return data
 
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        documento = validated_data.pop('documento', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.set_password(password)
-        instance.persona = Persona.objects.get(documento=documento)
-        instance.save()
-        return instance
-
     class Meta:
         model = Usuario
-        fields = ('token', 'username', 'email', 'password', 'documento')
+        fields = ('token', 'username', 'email')
