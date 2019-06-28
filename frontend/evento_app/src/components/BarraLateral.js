@@ -4,10 +4,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
-import PeopleIcon from '@material-ui/icons/People';
 import SchoolIcon from '@material-ui/icons/School';
 import AccoutBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { NavLink } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
@@ -24,7 +24,7 @@ class BarraLateral extends React.Component{
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Home"/>
+              <ListItemText primary="Inicio"/>
             </ListItem>
           </NavLink>
           <NavLink to="/cursos">
@@ -35,36 +35,56 @@ class BarraLateral extends React.Component{
               <ListItemText primary="Cursos" />
             </ListItem>
           </NavLink>  
-          <NavLink to="/profesores">
-            <ListItem button>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Profesores" />
-            </ListItem>
-          </NavLink>
         </List>
         <Divider />
-        <List>
-          <ListItem button>
-            <ListItemIcon>
-              <AccoutBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Configurar Perfil" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <SchoolIcon />
-            </ListItemIcon>
-            <ListItemText primary="Mis Cursos" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="Salir" />
-          </ListItem>
-        </List>
+        {
+          this.props.estaLogueado ?
+          <List onClick={this.props.cerrarDrawer}>
+            <NavLink to="/cursos">
+              <ListItem button>
+                <ListItemIcon>
+                  <AccoutBoxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Configurar Perfil" />
+              </ListItem>
+            </NavLink>  
+            <NavLink to="/mis_cursos">
+              <ListItem button>
+                <ListItemIcon>
+                  <SchoolIcon />
+                </ListItemIcon>
+                <ListItemText primary="Mis Cursos" />
+              </ListItem>
+            </NavLink>  
+            <NavLink to="/logout">
+              <ListItem button>
+                <ListItemIcon>
+                  <ExitToAppIcon />
+                </ListItemIcon>
+                <ListItemText primary="Salir" />
+              </ListItem>
+            </NavLink>
+          </List>
+          :
+          <List onClick={this.props.cerrarDrawer}>
+            <NavLink to="/iniciar_sesion">
+              <ListItem button>
+                <ListItemIcon>
+                  <AccoutBoxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Iniciar Sesión" />
+              </ListItem>
+            </NavLink>  
+            <NavLink to="/registrarse">
+              <ListItem button>
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Registrarse" />
+              </ListItem>
+            </NavLink>  
+          </List>
+        }
       </React.Fragment> 
     );
   }

@@ -304,7 +304,7 @@ export default function Dashboard(props) {
             </IconButton>
           </div>
           <Divider />
-          <BarraLateral cerrarDrawer={cerrarDrawer}/>
+          <BarraLateral cerrarDrawer={cerrarDrawer} estaLogueado={props.estaLogueado}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
