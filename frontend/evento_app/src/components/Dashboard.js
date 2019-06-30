@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import Link from '@material-ui/core/Link';
+import LinkMaterial from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -23,26 +23,26 @@ import SignUp from './basic_auth/SignUp';
 import Curso from './Curso';
 import Profesor from './Profesor';
 import Inicio from './Inicio';
-import { Route, HashRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ModificarPerfil from './ModificarPerfil';
 
 function Firma() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Desarrollado por '}
-      <Link color="inherit" href="https://github.com/matiasacosta/">
+      <LinkMaterial color="inherit" href="https://github.com/matiasacosta/">
         Matias Acosta
-      </Link>
+      </LinkMaterial>
       {' e '}
-      <Link color="inherit" href="https://github.com/Ian07/">
+      <LinkMaterial color="inherit" href="https://github.com/Ian07/">
         Ian Mazzaglia
-      </Link>
+      </LinkMaterial>
       {' utilizando '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <LinkMaterial color="inherit" href="https://material-ui.com/">
         Material UI
-      </Link>
+      </LinkMaterial>
     </Typography>
   );
 }
@@ -191,8 +191,8 @@ export default function Dashboard(props) {
         <MenuItem onClick={ () => {handleMenuClose() ; props.handleLogout()}}>Cerrar Sesión</MenuItem>
       : 
         <div>
-          <NavLink to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></NavLink>
-          <NavLink to="/registrarse"><MenuItem onClick={handleMenuClose}>Registrarse</MenuItem></NavLink>
+          <Link to="/iniciar_sesion"><MenuItem onClick={handleMenuClose}>Iniciar Sesión</MenuItem></Link>
+          <Link to="/registrarse"><MenuItem onClick={handleMenuClose}>Registrarse</MenuItem></Link>
         </div>
       }
       
@@ -238,7 +238,7 @@ export default function Dashboard(props) {
 
   return (
     <div className={classes.root}>
-      <HashRouter>
+      <BrowserRouter>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -324,7 +324,7 @@ export default function Dashboard(props) {
           </Container>
           <Firma />
         </main>
-      </HashRouter>  
+      </BrowserRouter>  
     </div>
   );
 }
