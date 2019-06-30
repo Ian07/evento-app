@@ -11,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 
 class BarraLateral extends React.Component{
@@ -40,7 +41,7 @@ class BarraLateral extends React.Component{
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
-              <ListItemText primary="Profesores" />
+              <ListItemText primary="Asistencia?" />
             </ListItem>
           </NavLink>
         </List>

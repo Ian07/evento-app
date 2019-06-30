@@ -16,7 +16,7 @@ class App extends Component {
     if(this.state.estaLogueado){
       /* si estamos logueados vamos a traernos a un usuario de
       la base, en este caso, yo tengo a Matias, pero podria ser cualquier cosa */
-      fetch('http://localhost:8000/api/v1/usuario_actual/',{
+      fetch('http://192.168.1.42:8000/api/v1/usuario_actual/',{
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -31,7 +31,7 @@ class App extends Component {
 
   handleLogin = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/api/token/', {
+    fetch('http://192.168.1.42:8000/api/token/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -43,14 +43,14 @@ class App extends Component {
         localStorage.setItem('token', json.access);
         this.setState({
           estaLogueado: true,
-          nombreUsuario: json.username //falta que el api-token devuelva el nombre de usuario
+          nombreUsuario: json.username
         });
       });
   };
 
   handleSignup = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/api/v1/registrar_usuario/', {
+    fetch('http://192.168.1.42:8000/api/v1/registrar_usuario/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

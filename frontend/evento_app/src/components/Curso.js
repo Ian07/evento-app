@@ -30,7 +30,7 @@ const Curso = (props) => {
                       </Button>
                   </CardActions>
               </Card>
-          ) : null}
+          ) : <h1> Hola :D </h1>}
       </div>
   )
 }
