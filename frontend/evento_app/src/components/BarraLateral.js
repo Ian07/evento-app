@@ -40,12 +40,12 @@ class BarraLateral extends React.Component{
         {
           this.props.estaLogueado ?
           <List onClick={this.props.cerrarDrawer}>
-            <NavLink to="/cursos">
+            <NavLink to="/modificar_perfil">
               <ListItem button>
                 <ListItemIcon>
                   <AccoutBoxIcon />
                 </ListItemIcon>
-                <ListItemText primary="Configurar Perfil" />
+                <ListItemText primary="Modificar Perfil" />
               </ListItem>
             </NavLink>  
             <NavLink to="/mis_cursos">

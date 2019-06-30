@@ -8,8 +8,10 @@ class App extends Component {
     this.state = {
       estaLogueado: localStorage.getItem('token') ? true : false,
       nombreUsuario: '',
+      email: '',
       erroresLogin: false,
-      erroresSignup: false
+      erroresSignup: false,
+      erroresModificacion: false
     };
   }
   
@@ -26,7 +28,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        this.setState({nombreUsuario: json.username})
+        this.setState({nombreUsuario: json.username, email: json.email})
       })
     }
   }
@@ -46,7 +48,8 @@ class App extends Component {
               localStorage.setItem('token', json.access);
               this.setState({
                 estaLogueado: true,
-                nombreUsuario: json.username, //falta que el api-token devuelva el nombre de usuario
+                nombreUsuario: json.username,
+                email: json.email,
                 erroresLogin: false
               });
             });
@@ -71,6 +74,7 @@ class App extends Component {
           this.setState({
             estaLogueado: true,
             nombreUsuario: json.username,
+            email: json.email,
             erroresSignup: false
           });
         }else{
@@ -86,15 +90,49 @@ class App extends Component {
     this.setState({ estaLogueado: false, nombreUsuario: '' });
   };
 
+  handleModificarPerfil = (e, datos) => {
+    e.preventDefault();
+    fetch('http://localhost:8000/api/v1/usuario_actual/',{
+      method: 'GET',
+      headers: {
+        Authorization: `JWT ${localStorage.getItem('token')}`,
+      }
+    })
+      .then(res => res.json())
+      .then(json => {
+        fetch('http://localhost:8000/api/v1/usuarios/'+ json.persona +'/',{
+          method: 'PUT',
+          headers: {
+            Authorization: `JWT ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        }).then(res => res.json())
+          .then(json => {
+            if (! json.error) {
+              localStorage.removeItem('token');
+              this.setState({ estaLogueado: false, nombreUsuario: '', email: '' });
+            } else {
+              this.setState({
+                erroresModificacion: json.error
+              });
+            }
+          })
+      })
+  };
+
   render(){
     return <Dashboard 
     estaLogueado={this.state.estaLogueado} 
     nombreUsuario={this.state.nombreUsuario}
+    emailUsuario={this.state.email}
     handleLogin={this.handleLogin}
     erroresLogin={this.state.erroresLogin}
     handleSignup={this.handleSignup}
     erroresSignup={this.state.erroresSignup}
     handleLogout={this.handleLogout}
+    handleModificarPerfil={this.handleModificarPerfil}
+    erroresModificacion={this.state.erroresModificacion}
     />
   }
 }

@@ -32,7 +32,7 @@ class OrganizadorSerializer(serializers.ModelSerializer):
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ("id", "TIPO", "ROLNAME", "persona", "username")
+        fields = ("id", "TIPO", "ROLNAME", "persona", "username","email")
 
 class UsuarioSerializerconToken(serializers.ModelSerializer):
     """

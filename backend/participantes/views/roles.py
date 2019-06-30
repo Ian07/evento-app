@@ -435,6 +435,47 @@ class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
+    def put(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            usuario = self.queryset.get(persona=obj_persona)
+            if request.user != usuario:
+                return Response(
+                    data={
+                        "error": f"No puede modificar otro usuario que no sea el actual.",
+                    },
+                    status=status.HTTP_401_UNAUTHORIZED
+                )        
+            if request.data['username'] and request.data['username'] != '':
+                usuario.username = request.data['username']
+            if request.data['email'] and request.data['email'] != '':
+                usuario.email = request.data['email']
+            if request.data['password'] and request.data['password'] != '':
+                usuario.set_password(request.data['password'])
+            usuario.save()
+            return Response(UsuarioSerializer(usuario).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Usuario.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Usuario.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except IntegrityError:
+            return Response(
+                data={
+                    "error": f"Nombre de usuario ya existente.",
+                },
+                status=status.HTTP_409_CONFLICT
+            )
+
     def delete(self, request, *args, **kwargs):
         try:
             obj_persona = Persona.objects.get(documento=kwargs["documento"])
