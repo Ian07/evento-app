@@ -4,6 +4,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import HomeIcon from '@material-ui/icons/Home';
+import PeopleIcon from '@material-ui/icons/People';
 import SchoolIcon from '@material-ui/icons/School';
 import AccoutBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -11,12 +12,14 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import { Link } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 
 class BarraLateral extends React.Component{
 
   render(){
     return(
+      
       <React.Fragment>
         <List onClick={this.props.cerrarDrawer}>
           <Link to="/">
@@ -24,7 +27,7 @@ class BarraLateral extends React.Component{
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
-              <ListItemText primary="Inicio"/>
+              <ListItemText primary="Home"/>
             </ListItem>
           </Link>
           <Link to="/cursos">

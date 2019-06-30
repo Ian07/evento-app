@@ -21,6 +21,7 @@ import BarraLateral from './BarraLateral';
 import SignIn from './basic_auth/SignIn';
 import SignUp from './basic_auth/SignUp';
 import Curso from './Curso';
+import Cursos from './Cursos';
 import Profesor from './Profesor';
 import Inicio from './Inicio';
 import { Route, BrowserRouter } from 'react-router-dom';
@@ -310,8 +311,12 @@ export default function Dashboard(props) {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
+            {/**
+              Esto es para que se vean los cursos!
+              <Route exact path="/" component={Inicio}/>
+            */}
             <Route exact path="/" component={Inicio}/>
-            <Route path="/cursos" component={Curso}/>
+            <Route path="/cursos" component={Cursos}/>
             <Route path="/profesores" component={Profesor}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin}/>}/>
             <Route path="/registrarse" render={() => <SignUp handleSignup={props.handleSignup} errores={props.erroresSignup} />}/>
