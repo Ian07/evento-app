@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -43,22 +41,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn(props) {
+export default function ModificarPerfil(props) {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(props.nombreUsuario);
+  const [email, setEmail] = useState(props.emailUsuario);
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setUsername(props.nombreUsuario);
+    setEmail(props.emailUsuario);
+  }, [props.nombreUsuario, props.emailUsuario])
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <PersonIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Iniciar Sesión
+          Modificar datos de usuario
         </Typography>
         {props.errores ?
           <Paper className={classes.root}>
@@ -67,7 +70,20 @@ export default function SignIn(props) {
             </Typography>
           </Paper>:null
         }
-        <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username': username,'password': password})}>
+        <form className={classes.form} noValidate onSubmit={e => props.handleModificarPerfil(e, {'username': username, 'email':email, 'password': password})}>
+        <TextField
+            type="text"
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Correo Electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            autoFocus
+          />
           <TextField
             type="text"
             variant="outlined"
@@ -100,20 +116,8 @@ export default function SignIn(props) {
             color="primary"
             className={classes.submit}
           >
-            Iniciar Sesión
+            Modificar Perfil
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                ¿Olvidaste tu Contraseña?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"¿No tenes cuenta? Sumate"}
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
     </Container>

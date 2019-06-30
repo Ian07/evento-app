@@ -18,6 +18,7 @@ class BarraLateral extends React.Component{
 
   render(){
     return(
+      
       <React.Fragment>
         <List onClick={this.props.cerrarDrawer}>
           <NavLink to="/">

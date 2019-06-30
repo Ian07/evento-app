@@ -27,6 +27,7 @@ import Inicio from './Inicio';
 import { Route, HashRouter } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { NavLink } from 'react-router-dom';
+import ModificarPerfil from './ModificarPerfil';
 
 function Firma() {
   return (
@@ -305,7 +306,7 @@ export default function Dashboard(props) {
             </IconButton>
           </div>
           <Divider />
-          <BarraLateral cerrarDrawer={cerrarDrawer}/>
+          <BarraLateral cerrarDrawer={cerrarDrawer} estaLogueado={props.estaLogueado}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -317,9 +318,14 @@ export default function Dashboard(props) {
             <Route exact path="/" component={Inicio}/>
             <Route path="/cursos" component={Cursos}/>
             <Route path="/profesores" component={Profesor}/>
-            <Route path="/mis_cursos" component={Curso}/>
-            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
-            <Route path="/registrarse" component={SignUp}/>
+            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin}/>}/>
+            <Route path="/registrarse" render={() => <SignUp handleSignup={props.handleSignup} errores={props.erroresSignup} />}/>
+            <Route path="/modificar_perfil" render={() => <ModificarPerfil 
+              handleModificarPerfil={props.handleModificarPerfil}
+              errores={props.erroresModificacion}
+              nombreUsuario={props.nombreUsuario}
+              emailUsuario={props.emailUsuario}/>
+            }/>
           </Container>
           <Firma />
         </main>
