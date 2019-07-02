@@ -21,7 +21,7 @@ const Curso = (props) => {
                     {props.curso.nombre}
                   </Typography>
                   <Typography variant="body2" color="textSecondary" component="p">
-                    {props.curso.slogan}
+                    {props.curso.descripcion}
                   </Typography>
                   </CardContent>
                   <CardActions>

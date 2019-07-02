@@ -54,12 +54,14 @@ class BarraLateral extends React.Component{
             </ListItemIcon>
             <ListItemText primary="Configurar Perfil" />
           </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <SchoolIcon />
-            </ListItemIcon>
-            <ListItemText primary="Mis Cursos" />
-          </ListItem>
+          <NavLink to="/mi_curso">
+            <ListItem button>
+              <ListItemIcon>
+                <SchoolIcon />
+              </ListItemIcon>
+              <ListItemText primary="Mis Cursos" />
+            </ListItem>
+          </NavLink>
           <ListItem button>
             <ListItemIcon>
               <ExitToAppIcon />
