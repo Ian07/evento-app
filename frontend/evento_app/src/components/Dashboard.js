@@ -20,7 +20,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import BarraLateral from './BarraLateral';
 import SignIn from './basic_auth/SignIn';
 import SignUp from './basic_auth/SignUp';
-import Curso from './Curso';
+import MisCursos from './MisCursos';
 import Cursos from './Cursos';
 import Profesor from './Profesor';
 import Inicio from './Inicio';
@@ -236,6 +236,18 @@ export default function Dashboard(props) {
       </MenuItem>
     </Menu>
   );
+  
+  const [curso, setCurso] = React.useState([]);
+
+  useEffect(() => {
+    fetch('http://192.168.1.40:8000/api/v1/cursos/2',{
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(json => {
+      setCurso(json);
+    })
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -306,26 +318,20 @@ export default function Dashboard(props) {
             </IconButton>
           </div>
           <Divider />
-          <BarraLateral cerrarDrawer={cerrarDrawer} estaLogueado={props.estaLogueado}/>
+          <BarraLateral cerrarDrawer={cerrarDrawer}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
-            {/**
-              Esto es para que se vean los cursos!
-              <Route exact path="/" component={Inicio}/>
-            */}
+            { /* Esto despues se mejora */ }
+            
+            
             <Route exact path="/" component={Inicio}/>
             <Route path="/cursos" component={Cursos}/>
+            <Route path="/mi_curso" component={MisCursos}/>
             <Route path="/profesores" component={Profesor}/>
-            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin}/>}/>
-            <Route path="/registrarse" render={() => <SignUp handleSignup={props.handleSignup} errores={props.erroresSignup} />}/>
-            <Route path="/modificar_perfil" render={() => <ModificarPerfil 
-              handleModificarPerfil={props.handleModificarPerfil}
-              errores={props.erroresModificacion}
-              nombreUsuario={props.nombreUsuario}
-              emailUsuario={props.emailUsuario}/>
-            }/>
+            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
+            <Route path="/registrarse" component={SignUp}/>
           </Container>
           <Firma />
         </main>

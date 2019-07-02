@@ -20,6 +20,7 @@ class ListCreateCursosView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         nuevo_curso = Curso.objects.create(
             nombre=request.data["nombre"],
+            slogan=request.data["slogan"],
             descripcion=request.data["descripcion"],
             imagen=request.data["imagen"]
         )

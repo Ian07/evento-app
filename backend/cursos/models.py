@@ -4,6 +4,7 @@ from participantes.models import Profesor, Disertante, Alumno
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=100)
+    slogan = models.CharField(max_length=50, null=True, blank=True)
     descripcion = models.TextField(max_length=800)
     imagen = models.ImageField(upload_to='imagenes')
     profesores = models.ManyToManyField(Profesor, related_name="cursos", db_table="curso_profesor")

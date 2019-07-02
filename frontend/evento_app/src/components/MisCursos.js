@@ -105,10 +105,10 @@ export function Inicio() {
     return(
         <div>
           <Typography variant="h3" component="h3" color="inherit" gutterBottom align="center">
-            ¡Cursos de la Escuela informática de trelew 2019!
+            ¡Cursos en los que estoy inscripto!
           </Typography>
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
-            Tiempo de Inscripcion hasta el 10 de Septiembre
+            Las clases empiezan el 10 de Septiembre
           </Typography>
           <Grid container spacing={3}>
             { cursos.map(cursoActual => (
