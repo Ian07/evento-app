@@ -236,18 +236,6 @@ export default function Dashboard(props) {
       </MenuItem>
     </Menu>
   );
-  
-  const [curso, setCurso] = React.useState([]);
-
-  useEffect(() => {
-    fetch('http://192.168.1.40:8000/api/v1/cursos/2',{
-      method: 'GET'
-    })
-    .then(res => res.json())
-    .then(json => {
-      setCurso(json);
-    })
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -318,7 +306,7 @@ export default function Dashboard(props) {
             </IconButton>
           </div>
           <Divider />
-          <BarraLateral cerrarDrawer={cerrarDrawer}/>
+          <BarraLateral cerrarDrawer={cerrarDrawer} estaLogueado={props.estaLogueado}/>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -330,8 +318,12 @@ export default function Dashboard(props) {
             <Route path="/cursos" component={Cursos}/>
             <Route path="/mi_curso" component={MisCursos}/>
             <Route path="/profesores" component={Profesor}/>
-            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} />}/>
-            <Route path="/registrarse" component={SignUp}/>
+            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin}/>}/>
+            <Route path="/registrarse" render={() => <SignUp handleSignUp={props.handleSignUp} errores={props.erroresSignup}/>}/>
+            <Route path="/modificar_perfil" render={() => <ModificarPerfil handleModificarPerfil={props.handleModificarPerfil} 
+            errores={props.erroresModificacion}
+            nombreUsuario={props.nombreUsuario}
+            emailUsuario={props.emailUsuario} />}/>
           </Container>
           <Firma />
         </main>
