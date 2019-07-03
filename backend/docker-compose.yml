@@ -21,7 +21,7 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - "80:80"
+      - "8088:80"
   web:
     build: .
     command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
