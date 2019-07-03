@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Curso from './Curso';
-import afiche from './Afiche.png'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -106,12 +105,18 @@ export function Inicio() {
     return(
         <div>
           <Typography variant="h3" component="h3" color="inherit" gutterBottom align="center">
-            ¡Escuela informática de trelew 2019!
+            ¡Cursos de la Escuela informática de trelew 2019!
           </Typography>
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
-            Del 16 al 20 de Septiembre
+            Tiempo de Inscripcion hasta el 10 de Septiembre
           </Typography>
-          <img src={afiche} alt="Afiche" />;
+          <Grid container spacing={3}>
+            { cursos.map(cursoActual => (
+              <Grid item xs={12} sm={6} lg={4} xl={3}>
+                <Curso curso={cursoActual} />
+              </Grid>
+            ))}
+          </Grid>
         </div>
     );
 }

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import status, APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from django.db import IntegrityError
 
 class ListCreateAlumnoView(generics.ListCreateAPIView):
     """
@@ -350,6 +350,53 @@ class ListCreateUsuarioView(generics.ListCreateAPIView):
             status=status.HTTP_201_CREATED
         )
 
+class CrearUsuarioView(generics.CreateAPIView):
+    """
+    Crea un nuevo usuario. Se usa para Signup
+
+    mas información en: https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+    """
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializerconToken
+    permission_classes = (AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=request.data["documento"])
+            if obj_persona.sos(Usuario):
+                return Response(
+                    data={
+                        "error": f"Usted ya se encuntra registrado dentro del evento.",
+                    },
+                    status=status.HTTP_409_CONFLICT
+                )  
+        except Persona.DoesNotExist:
+            obj_persona = Persona.objects.create(
+                documento=request.data["documento"],
+                nombre=request.data["nombre"],
+                apellido=request.data["apellido"]
+            )
+        try:
+            nuevo_usuario = Usuario.objects.create(
+                persona=obj_persona,
+                username=request.data["username"],
+                email=request.data["email"]
+            )
+            nuevo_usuario.set_password(request.data["password"])
+            nuevo_usuario.save()
+            return Response(
+                data=UsuarioSerializerconToken(nuevo_usuario).data,
+                status=status.HTTP_201_CREATED
+            )
+        except IntegrityError:
+            return Response(
+                data={
+                    "error": f"El nombre de usuario {request.data['username']} ya se encuentra utilizado.",
+                },
+                status=status.HTTP_409_CONFLICT
+            )  
+        
+
 @api_view(['GET'])
 def usuario_actual(request, *args, **kwargs):
     """
@@ -358,22 +405,6 @@ def usuario_actual(request, *args, **kwargs):
     
     serializer = UsuarioSerializer(request.user)
     return Response(serializer.data)
-
-class UserList(APIView):
-    """
-    Crea un nuevo usuario. Se usa para Signup
-
-    mas información en: https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
-    """
-
-    permission_classes = (AllowAny,)
-
-    def post(self, request, *args, **kwargs):
-        serializer = UsuarioSerializerconToken(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -402,6 +433,47 @@ class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
                     "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Usuario.",
                 },
                 status=status.HTTP_404_NOT_FOUND
+            )
+
+    def put(self, request, *args, **kwargs):
+        try:
+            obj_persona = Persona.objects.get(documento=kwargs["documento"])
+            usuario = self.queryset.get(persona=obj_persona)
+            if request.user != usuario:
+                return Response(
+                    data={
+                        "error": f"No puede modificar otro usuario que no sea el actual.",
+                    },
+                    status=status.HTTP_401_UNAUTHORIZED
+                )        
+            if request.data['username'] and request.data['username'] != '':
+                usuario.username = request.data['username']
+            if request.data['email'] and request.data['email'] != '':
+                usuario.email = request.data['email']
+            if request.data['password'] and request.data['password'] != '':
+                usuario.set_password(request.data['password'])
+            usuario.save()
+            return Response(UsuarioSerializer(usuario).data)
+        except Persona.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"No existe la persona con el documento: '{kwargs['documento']}'.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )    
+        except Usuario.DoesNotExist:
+            return Response(
+                data={
+                    "error": f"La persona con documento: '{kwargs['documento']}', NO posee el rol Usuario.",
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except IntegrityError:
+            return Response(
+                data={
+                    "error": f"Nombre de usuario ya existente.",
+                },
+                status=status.HTTP_409_CONFLICT
             )
 
     def delete(self, request, *args, **kwargs):

@@ -8,6 +8,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
         data['username'] = self.user.username
+        data['email'] = self.user.email
         return data
 
 class MyTokenObtainPairView(TokenObtainPairView):

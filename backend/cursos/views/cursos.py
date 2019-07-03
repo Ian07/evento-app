@@ -3,15 +3,10 @@ from cursos.models import Curso, Clase
 from participantes.models import *
 from cursos.serializers import CursoSerializer, ClaseSerializer
 from participantes.serializers import ProfesorSerializer, AlumnoSerializer
+from api_eventos.utils import AutenticacionSoloPost
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status, APIView
 from rest_framework.response import Response
-
-class AutenticacionSoloPost(IsAuthenticated):
-    def has_permission(self, request, view):
-        if request.method == 'GET':
-            return True
-        return super(AutenticacionSoloPost, self).has_permission(request, view)
 
 class ListCreateCursosView(generics.ListCreateAPIView):
     """
@@ -25,6 +20,7 @@ class ListCreateCursosView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         nuevo_curso = Curso.objects.create(
             nombre=request.data["nombre"],
+            slogan=request.data["slogan"],
             descripcion=request.data["descripcion"],
             imagen=request.data["imagen"]
         )
@@ -169,3 +165,13 @@ class ClasesList(APIView):
         id_clases = Curso.objects.filter(id=id_curso).values_list('clases', flat=True)
         clases = Clase.objects.filter(id__in=id_clases)
         return Response(ClaseSerializer(clases, many=True).data)
+
+
+class CursosDeAlumnoList(APIView):
+    """
+    GET cursos/:documento/cursosDeAlumno
+    """
+    def get(self, request, *args, **kwargs):
+        documento = kwargs['documento']
+        cursos = Curso.objects.filter(alumnos__persona__documento=documento)
+        return Response(CursoSerializer(cursos, many=True).data)

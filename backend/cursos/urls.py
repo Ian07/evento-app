@@ -10,6 +10,7 @@ urlpatterns = [
     path('cursos/<int:id>/profesores/', ProfesoresList.as_view(), name="curso-profesores-list"),
     path('cursos/<int:id>/alumnos/', AlumnosList.as_view(), name="curso-alumnos-list"),
     path('cursos/<int:id>/clases/', ClasesList.as_view(), name="curso-clases-list"),
+    path('cursos/<int:documento>/cursosDeAlumno/', CursosDeAlumnoList.as_view(), name="curso-de-alumno-list"),
     path('clases/', ListCreateClasesView.as_view(), name="clases-list-create"),
     path('clases/<int:id>/', ClaseDetailView.as_view(), name="clases-detail"),
     path('clases/<int:id>/alumnos_presentes/', AlumnosPresentesList.as_view(), name="curso-alumnos_presentes-list"),
