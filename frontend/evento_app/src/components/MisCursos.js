@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Curso from './Curso';
+import CursoGrid from './CursoGrid';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -92,7 +91,7 @@ export function Inicio() {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://192.168.1.40:8000/api/v1/cursos/',{
+      fetch('http://localhost:8000/api/v1/cursos/',{
         method: 'GET'
       })
       .then(res => res.json())
@@ -110,13 +109,7 @@ export function Inicio() {
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
             Las clases empiezan el 10 de Septiembre
           </Typography>
-          <Grid container spacing={3}>
-            { cursos.map(cursoActual => (
-              <Grid item xs={12} sm={6} lg={4} xl={3}>
-                <Curso curso={cursoActual} />
-              </Grid>
-            ))}
-          </Grid>
+          <CursoGrid cursos={cursos}></CursoGrid>
         </div>
     );
 }
