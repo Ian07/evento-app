@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Curso from './Curso';
 
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
@@ -92,7 +93,7 @@ export function Inicio() {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://localhost:8000/api/v1/cursos/',{
+      fetch('http://192.168.1.42:8000/api/v1/cursos/',{
         method: 'GET'
       })
       .then(res => res.json())

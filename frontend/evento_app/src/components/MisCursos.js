@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Curso from './Curso';
+import MiCurso from './MiCurso';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -92,7 +93,7 @@ export function Inicio() {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://192.168.1.40:8000/api/v1/cursos/',{
+      fetch('http://192.168.1.42:8000/api/v1/cursos/38804362/cursosDeAlumno',{
         method: 'GET'
       })
       .then(res => res.json())
@@ -113,7 +114,7 @@ export function Inicio() {
           <Grid container spacing={3}>
             { cursos.map(cursoActual => (
               <Grid item xs={12} sm={6} lg={4} xl={3}>
-                <Curso curso={cursoActual} />
+                <MiCurso curso={cursoActual} />
               </Grid>
             ))}
           </Grid>

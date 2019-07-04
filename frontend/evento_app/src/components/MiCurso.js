@@ -23,10 +23,13 @@ const Curso = (props) => {
                   <Typography variant="body2" color="textSecondary" component="p">
                     {props.curso.descripcion}
                   </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    {props.curso.slogan}
+                  </Typography>
                   </CardContent>
                   <CardActions>
                       <Button size="small" color="primary" href="#" target="_blank">
-                          Inscribirse
+                          Inscribirseee
                       </Button>
                   </CardActions>
               </Card>
