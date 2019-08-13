@@ -26,7 +26,7 @@ SECRET_KEY = 'qz9qa-b22)@wgz-c7_edx#8x_f_0kpef7*o=ssjw)1p%d=h3cv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*','2482271d.ngrok.io','192.168.1.42']
 
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'participantes',
-    'cursos'
+    'cursos',
+    'webpush'
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'api_eventos.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'db_eventos',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'EventosDit'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': '5432',
     }
@@ -109,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BJ2VpiRAu3hAFAD6c9mS83-cSBWdz9tCZqIb5o5SpJRRy3zgpVVLQbjswZv9KU3vYqMEPJfheLETe-c680CXTTQ",
+   "VAPID_PRIVATE_KEY": "s4Uv_1TNti_qInvqYRdeyxsi7e--fj6uBzF5dN2m51k",
+   "VAPID_ADMIN_EMAIL": "matiasacosta1995@gmail.com"
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -128,6 +134,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

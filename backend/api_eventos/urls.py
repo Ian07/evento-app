@@ -19,11 +19,20 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework_simplejwt import views as jwt_views
 from api_eventos.views import MyTokenObtainPairView
+from .views import home, send_push
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('api/(?P<version>(v1|v2))/', include('participantes.urls')),
     re_path('api/(?P<version>(v1|v2))/', include('cursos.urls')),
     path('api/token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    # Estas corresponden a la parte de Web Push
+    path('', home),
+    path('send_push', send_push),
+    path('webpush/', include('webpush.urls')),
+    path('sw.js', TemplateView.as_view(template_name='sw.js', content_type='application/x-javascript'))
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + 
