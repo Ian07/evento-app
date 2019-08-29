@@ -166,5 +166,9 @@ CORS_ORIGIN_WHITELIST = [
     'http://192.168.42.104:3000',
     'http://192.168.1.40:3000',
     'http://localhost:5000',
-    'http://192.168.42.104:3000'
+    'http://192.168.42.104:3000',
+    'https://0bc0bddf.ngrok.io'
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+SESSION_COOKIE_SAMESITE = None

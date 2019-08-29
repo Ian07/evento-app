@@ -20,7 +20,7 @@ class App extends Component {
     if(this.state.estaLogueado){
       /* si estamos logueados vamos a traernos a un usuario de
       la base, en este caso, yo tengo a Matias, pero podria ser cualquier cosa */
-      fetch('http://192.168.1.42:8000/api/v1/usuario_actual/',{
+      fetch('https://8b73abec.ngrok.io/api/v1/usuario_actual/',{
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -35,7 +35,7 @@ class App extends Component {
 
   handleLogin = (e, data) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/token/', {
+    fetch('https://8b73abec.ngrok.io/api/token/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -46,6 +46,8 @@ class App extends Component {
         if(res.status === 200){
             res.json().then(json => {
               localStorage.setItem('token', json.access);
+              localStorage.setItem('vapid_key', 'BJ2VpiRAu3hAFAD6c9mS83-cSBWdz9tCZqIb5o5SpJRRy3zgpVVLQbjswZv9KU3vYqMEPJfheLETe-c680CXTTQ');
+              localStorage.setItem('user_id','1');
               this.setState({
                 estaLogueado: true,
                 nombreUsuario: json.username,
@@ -61,7 +63,7 @@ class App extends Component {
 
   handleSignup = (e, datos) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/v1/registrar_usuario/', {
+    fetch('https://8b73abec.ngrok.io/api/v1/registrar_usuario/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -87,12 +89,14 @@ class App extends Component {
 
   handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('vapid_key');
+    localStorage.removeItem('user_id');
     this.setState({ estaLogueado: false, nombreUsuario: '' });
   };
 
   handleModificarPerfil = (e, datos) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/v1/usuario_actual/',{
+    fetch('https://8b73abec.ngrok.io/api/v1/usuario_actual/',{
       method: 'GET',
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -100,7 +104,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        fetch('http://192.168.1.42:8000/api/v1/usuarios/'+ json.persona +'/',{
+        fetch('https://8b73abec.ngrok.io/api/v1/usuarios/'+ json.persona +'/',{
           method: 'PUT',
           headers: {
             Authorization: `JWT ${localStorage.getItem('token')}`,

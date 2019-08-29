@@ -54,10 +54,74 @@ export function register(config) {
   }
 }
 
+//Funciones de notificaciones
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+  const outputData = outputArray.map((output, index) => rawData.charCodeAt(index));
+
+  return outputData;
+}
+
+const sendSubData = async (subscription) => {
+  const browser = navigator.userAgent.match(/(firefox|msie|chrome|safari|trident)/ig)[0].toLowerCase();
+  const data = {
+      status_type: 'subscribe',
+      subscription: subscription.toJSON(),
+      browser: browser,
+  };
+
+  const res = await fetch('https://8b73abec.ngrok.io/webpush/save_information', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+          'content-type': 'application/json'
+      },
+      credentials: "include"
+  });
+
+  handleResponse(res);
+};
+
+const handleResponse = (res) => {
+  console.log(res.status);
+};
+//Fin funciones de notificaciones
+
 function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+
+      //Codigo de notificaciones
+      registration.pushManager.getSubscription().then((subscription)=>{
+        if (subscription) {
+          sendSubData(subscription);
+          return;
+        }
+
+        //const vapidMeta = document.querySelector('meta[name="vapid-key"]');
+        const key = 'BJ2VpiRAu3hAFAD6c9mS83-cSBWdz9tCZqIb5o5SpJRRy3zgpVVLQbjswZv9KU3vYqMEPJfheLETe-c680CXTTQ';
+        const options = {
+            userVisibleOnly: true,
+            // if key exists, create applicationServerKey property
+            ...(key && {applicationServerKey: urlB64ToUint8Array(key)})
+        };
+
+        registration.pushManager.subscribe(options).then((sub)=>{
+          if(sub){
+            sendSubData(sub);
+          }
+        });
+      });
+      //Fin de codigo notificaciones
+
+
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
