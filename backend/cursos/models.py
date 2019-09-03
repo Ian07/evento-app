@@ -10,6 +10,9 @@ class Curso(models.Model):
     profesores = models.ManyToManyField(Profesor, related_name="cursos", db_table="curso_profesor")
     alumnos = models.ManyToManyField(Alumno, related_name="cursos", db_table="curso_alumnos")
 
+    def __str__(self):
+        return f"{self.nombre}"
+
     class Meta:
         db_table = 'cursos'
 

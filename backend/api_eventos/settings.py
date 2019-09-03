@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':'db_eventos',
         'USER': 'postgres',
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'EventosDit'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres'),
         'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': '5432',
     }

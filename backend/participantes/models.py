@@ -83,7 +83,11 @@ class Rol(models.Model):
     )
 
     def __str__(self):
-        return "{}".format(self.ROLNAME)
+        return "{} - {} {}".format(
+            self.ROLNAME,
+            self.persona.nombre,
+            self.persona.apellido
+        )
     
     @property
     def nombre(self):
