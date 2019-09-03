@@ -8,6 +8,7 @@ urlpatterns = [
     path('personas/<int:documento>/', PersonaDetailView.as_view(), name="personas-detail"),
     path('alumnos/', ListCreateAlumnoView.as_view(), name="alumnos-list-create"),
     path('alumnos/<int:documento>/', AlumnoDetailView.as_view(), name="alumnos-detail"),
+    path('alumnos/<int:documento>/cursos/', CursosDeAlumnoList.as_view(), name="curso-de-alumno-list"),
     path('profesores/', ListCreateProfesorView.as_view(), name="profesores-list-create"),
     path('profesores/<int:documento>/', ProfesorDetailView.as_view(), name="profesores-detail"),
     path('disertantes/', ListCreateDisertanteView.as_view(), name="disertantes-list-create"),

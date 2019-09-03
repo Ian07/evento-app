@@ -243,15 +243,17 @@ export default function Dashboard(props) {
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
-          <IconButton
+          {props.estaLogueado &&
+            <IconButton
             edge="start"
             color="inherit"
             aria-label="Abrir drawer"
             onClick={abrirDrawer}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
+            >
+              <MenuIcon />
+            </IconButton>
+          }
           <Typography variant="h6" color="inherit" noWrap className={classes.title}>
             Escuela de Informática 2019
           </Typography>
@@ -313,17 +315,15 @@ export default function Dashboard(props) {
           <Container maxWidth="lg" className={classes.container}>
             { /* Esto despues se mejora */ }
             
-            
             <Route exact path="/" component={Inicio}/>
-            <Route path="/cursos" component={Cursos}/>
-            <Route path="/mi_curso" component={MisCursos}/>
-            <Route path="/profesores" component={Profesor}/>
-            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin}/>}/>
+            <Route path="/cursos" render={() => <Cursos estaLogueado={props.estaLogueado}/>}/>
+            <Route path="/mi_curso" render={() => <MisCursos documento={props.documento}/>}/>
+            <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin} estaLogueado={props.estaLogueado}/>}/>
             <Route path="/registrarse" render={() => <SignUp handleSignUp={props.handleSignUp} errores={props.erroresSignup}/>}/>
             <Route path="/modificar_perfil" render={() => <ModificarPerfil handleModificarPerfil={props.handleModificarPerfil} 
             errores={props.erroresModificacion}
             nombreUsuario={props.nombreUsuario}
-            emailUsuario={props.emailUsuario} />}/>
+            emailUsuario={props.emaiDlUsuario} />}/>
           </Container>
           <Firma />
         </main>

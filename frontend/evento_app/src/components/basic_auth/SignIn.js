@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Paper } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -49,73 +50,79 @@ export default function SignIn(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Iniciar Sesión
-        </Typography>
-        {props.errores ?
-          <Paper className={classes.root}>
-            <Typography component="p" className={classes.errorTipo}>
-              {props.errores}
-            </Typography>
-          </Paper>:null
-        }
-        <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username': username,'password': password})}>
-          <TextField
-            type="text"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Nombre de Usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            name="username"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+  if(props.estaLogueado){
+    return <Redirect to={{
+      pathname: '/mi_curso',
+      state: { documento: '38800940' }
+  }}/>
+  }else{
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Iniciar Sesión
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                ¿Olvidaste tu Contraseña?
-              </Link>
+          </Typography>
+          {props.errores ?
+            <Paper className={classes.root}>
+              <Typography component="p" className={classes.errorTipo}>
+                {props.errores}
+              </Typography>
+            </Paper>:null
+          }
+          <form className={classes.form} noValidate onSubmit={e => props.handleLogin(e, {'username': username,'password': password})}>
+            <TextField
+              type="text"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Nombre de Usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Iniciar Sesión
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  ¿Olvidaste tu Contraseña?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {"¿No tenes cuenta? Sumate"}
+                </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"¿No tenes cuenta? Sumate"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
-  );
+          </form>
+        </div>
+      </Container>
+    );
+  }
 }

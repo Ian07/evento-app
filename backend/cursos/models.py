@@ -8,7 +8,7 @@ class Curso(models.Model):
     descripcion = models.TextField(max_length=800)
     imagen = models.ImageField(upload_to='imagenes')
     profesores = models.ManyToManyField(Profesor, related_name="cursos", db_table="curso_profesor")
-    alumnos = models.ManyToManyField(Alumno, related_name="cursos", db_table="curso_alumnos")
+    alumnos = models.ManyToManyField(Alumno, related_name="cursos", db_table="curso_alumnos", blank=True)
 
     def __str__(self):
         return f"{self.nombre}"

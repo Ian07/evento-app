@@ -84,15 +84,18 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-export function Inicio() {
+export function Inicio(props) {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://192.168.1.42:8000/api/v1/cursos/38804362/cursosDeAlumno',{
-        method: 'GET'
+      fetch('http://192.168.1.43:8000/api/v1/alumnos/'+ props.documento +'/cursos',{
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+        }
       })
       .then(res => res.json())
       .then(json => {
