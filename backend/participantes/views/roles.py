@@ -508,4 +508,4 @@ class CursosDeAlumnoList(APIView):
     def get(self, request, *args, **kwargs):
         documento = kwargs['documento']
         cursos = Curso.objects.filter(alumnos__persona__documento=documento)
-        return Response(CursoSerializer(cursos, many=True).data)
+        return Response(CursoSerializer(cursos, context={'request': request}, many=True).data)

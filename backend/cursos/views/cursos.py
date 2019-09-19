@@ -65,26 +65,24 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         try:
             curso = self.queryset.get(id=kwargs["pk"])
-            serializer = CursoSerializer()
-            curso_modificado = serializer.update(curso, request.data)
-
             if request.POST.get('add_doc_profesor'):
                 profesor = Profesor.objects.get(persona=request.data["add_doc_profesor"])
-                curso_modificado.profesores.add(profesor)
+                curso.profesores.add(profesor)
 
             if request.POST.get('remove_doc_profesor'):
                 profesor = Profesor.objects.get(persona=request.data["remove_doc_profesor"])
-                curso_modificado.profesores.remove(profesor)
+                curso.profesores.remove(profesor)
 
             if request.POST.get('add_doc_alumno'):
                 alumno = Alumno.objects.get(persona=request.data["add_doc_alumno"])
-                curso_modificado.alumnos.add(alumno)  
+                curso.alumnos.add(alumno)  
             
             if request.POST.get('remove_doc_alumno'):
                 alumno = Alumno.objects.get(persona=request.data["remove_doc_alumno"])
-                curso_modificado.alumnos.remove(alumno)  
-
-            curso_modificado.save()
+                curso.alumnos.remove(alumno)  
+            curso.save()
+            serializer = CursoSerializer()
+            curso_modificado = serializer.update(curso, request.data)
             return Response(CursoSerializer(curso_modificado).data)
 
         except Curso.DoesNotExist:
