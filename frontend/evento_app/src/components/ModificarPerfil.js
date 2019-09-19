@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Paper } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -53,73 +54,77 @@ export default function ModificarPerfil(props) {
     setEmail(props.emailUsuario);
   }, [props.nombreUsuario, props.emailUsuario])
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <PersonIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Modificar datos de usuario
-        </Typography>
-        {props.errores ?
-          <Paper className={classes.root}>
-            <Typography component="p" className={classes.errorTipo}>
-              {props.errores}
-            </Typography>
-          </Paper>:null
-        }
-        <form className={classes.form} noValidate onSubmit={e => props.handleModificarPerfil(e, {'username': username, 'email':email, 'password': password})}>
-        <TextField
-            type="text"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Correo Electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            autoFocus
-          />
+  if(! props.estaLogueado){
+    return <Redirect to="/"/>
+  }else{
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <PersonIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Modificar datos de usuario
+          </Typography>
+          {props.errores ?
+            <Paper className={classes.root}>
+              <Typography component="p" className={classes.errorTipo}>
+                {props.errores}
+              </Typography>
+            </Paper>:null
+          }
+          <form className={classes.form} noValidate onSubmit={e => props.handleModificarPerfil(e, {'username': username, 'email':email, 'password': password})}>
           <TextField
-            type="text"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Nombre de Usuario"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            name="username"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-            label="Contraseña"
-            type="password"
-            id="password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Modificar Perfil
-          </Button>
-        </form>
-      </div>
-    </Container>
-  );
+              type="text"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Correo Electrónico"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              autoFocus
+            />
+            <TextField
+              type="text"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Nombre de Usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Modificar Perfil
+            </Button>
+          </form>
+        </div>
+      </Container>
+    );
+  }
 }

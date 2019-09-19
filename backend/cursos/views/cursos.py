@@ -165,13 +165,3 @@ class ClasesList(APIView):
         id_clases = Curso.objects.filter(id=id_curso).values_list('clases', flat=True)
         clases = Clase.objects.filter(id__in=id_clases)
         return Response(ClaseSerializer(clases, many=True).data)
-
-
-class CursosDeAlumnoList(APIView):
-    """
-    GET cursos/:documento/cursosDeAlumno
-    """
-    def get(self, request, *args, **kwargs):
-        documento = kwargs['documento']
-        cursos = Curso.objects.filter(alumnos__persona__documento=documento)
-        return Response(CursoSerializer(cursos, many=True).data)

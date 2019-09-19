@@ -1,5 +1,7 @@
 from rest_framework import generics
 from participantes.models import Persona, Alumno, Profesor, Disertante, Organizador, Usuario
+from cursos.models import Curso
+from cursos.serializers import CursoSerializer
 from participantes.serializers import AlumnoSerializer, ProfesorSerializer, DisertanteSerializer, OrganizadorSerializer, UsuarioSerializer, UsuarioSerializerconToken
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import status, APIView
@@ -496,3 +498,14 @@ class UsuariorDetailView(generics.RetrieveUpdateDestroyAPIView):
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
+
+class CursosDeAlumnoList(APIView):
+    """
+    GET alumnos/:documento/cursos
+    """
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        documento = kwargs['documento']
+        cursos = Curso.objects.filter(alumnos__persona__documento=documento)
+        return Response(CursoSerializer(cursos, many=True).data)
