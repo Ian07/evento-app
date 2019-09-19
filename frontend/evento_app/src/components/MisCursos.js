@@ -91,7 +91,7 @@ export function Inicio() {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://192.168.1.42:8000/api/v1/cursos/38804362/cursosDeAlumno',{
+      fetch('http://192.168.1.43:8000/api/v1/cursos/38800940/cursosDeAlumno',{
         method: 'GET'
       })
       .then(res => res.json())

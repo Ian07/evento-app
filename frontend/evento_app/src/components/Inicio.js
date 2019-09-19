@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Curso from './Curso';
 import afiche from './Afiche.png'
 
 const drawerWidth = 240;
@@ -93,7 +91,7 @@ export function Inicio() {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-      fetch('http://192.168.1.42:8000/api/v1/cursos/',{
+      fetch('http://192.168.1.43:8000/api/v1/cursos/',{
         method: 'GET'
       })
       .then(res => res.json())

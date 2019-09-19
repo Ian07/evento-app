@@ -20,7 +20,7 @@ class App extends Component {
     if(this.state.estaLogueado){
       /* si estamos logueados vamos a traernos a un usuario de
       la base, en este caso, yo tengo a Matias, pero podria ser cualquier cosa */
-      fetch('http://192.168.1.42:8000/api/v1/usuario_actual/',{
+      fetch('http://192.168.1.43:8000/api/v1/usuario_actual/',{
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -35,7 +35,7 @@ class App extends Component {
 
   handleLogin = (e, data) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/token/', {
+    fetch('http://192.168.1.43:8000/api/token/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ class App extends Component {
 
   handleSignup = (e, datos) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/v1/registrar_usuario/', {
+    fetch('http://192.168.1.43:8000/api/v1/registrar_usuario/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ class App extends Component {
 
   handleModificarPerfil = (e, datos) => {
     e.preventDefault();
-    fetch('http://192.168.1.42:8000/api/v1/usuario_actual/',{
+    fetch('http://192.168.1.43:8000/api/v1/usuario_actual/',{
       method: 'GET',
       headers: {
         Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -100,7 +100,7 @@ class App extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        fetch('http://192.168.1.42:8000/api/v1/usuarios/'+ json.persona +'/',{
+        fetch('http://192.168.1.43:8000/api/v1/usuarios/'+ json.persona +'/',{
           method: 'PUT',
           headers: {
             Authorization: `JWT ${localStorage.getItem('token')}`,
