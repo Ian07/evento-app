@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CursoGrid from './CursoGrid';
-
+import { Redirect } from 'react-router-dom';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
-export function Inicio() {
+export function Inicio(props) {
     const classes = useStyles();
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     
@@ -101,8 +101,10 @@ export function Inicio() {
       })
     }, []);
 
-
-    return(
+    if(! props.estaLogueado){
+      return <Redirect to="/"/>
+    }else{
+      return(
         <div>
           <Typography variant="h3" component="h3" color="inherit" gutterBottom align="center">
             ¡Cursos de la Escuela informática de trelew 2019!
@@ -112,7 +114,8 @@ export function Inicio() {
           </Typography>
           <CursoGrid cursos={cursos}></CursoGrid>
         </div>
-    );
+      );
+    }
 }
 
 export default Inicio;

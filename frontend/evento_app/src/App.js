@@ -8,6 +8,7 @@ class App extends Component {
     this.state = {
       estaLogueado: localStorage.getItem('token') ? true : false,
       nombreUsuario: '',
+      documento: '',
       email: '',
       erroresLogin: false,
       erroresSignup: false,
@@ -28,7 +29,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        this.setState({nombreUsuario: json.username, email: json.email})
+        this.setState({nombreUsuario: json.username, email: json.email, documento:json.persona})
       })
     }
   }
@@ -50,6 +51,7 @@ class App extends Component {
                 estaLogueado: true,
                 nombreUsuario: json.username,
                 email: json.email,
+                documento: json.documento,
                 erroresLogin: false
               });
             });
@@ -75,6 +77,7 @@ class App extends Component {
             estaLogueado: true,
             nombreUsuario: json.username,
             email: json.email,
+            documento: json.persona,
             erroresSignup: false
           });
         }else{
@@ -126,6 +129,7 @@ class App extends Component {
     estaLogueado={this.state.estaLogueado} 
     nombreUsuario={this.state.nombreUsuario}
     emailUsuario={this.state.email}
+    documento={this.state.documento}
     handleLogin={this.handleLogin}
     erroresLogin={this.state.erroresLogin}
     handleSignup={this.handleSignup}

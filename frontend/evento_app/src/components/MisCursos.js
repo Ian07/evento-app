@@ -91,7 +91,6 @@ export function Inicio(props) {
     const [cursos, setCursos] = React.useState([]);
 
     useEffect(() => {
-
       fetch('http://192.168.1.43:8000/api/v1/alumnos/'+ props.documento +'/cursos',{
         method: 'GET',
         headers: {
