@@ -57,6 +57,22 @@ const DetalleCurso = ({match}) => {
       })
     }, []);
 
+    const sayHello = () => {
+      fetch(`http://192.168.1.43:8000/api/v1/cursos/${match.params.id}/`,{
+        method: 'PUT',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: `{"add_doc_alumno":${localStorage.getItem('documento')}}`
+      })
+      .then(res => {
+        if(res.status === 200){
+          alert("Tu inscripcion ah sido registrada!");
+        }
+      })
+    };
+
     return(
         <Card>
             <CardMedia style={{height:0, paddingTop: '56.25%'}}
@@ -89,8 +105,11 @@ const DetalleCurso = ({match}) => {
                 >
                   <Fade in={open}>
                     <div className={classes.paper}>
-                      <h2 id="transition-modal-title">Transition modal</h2>
-                      <p id="transition-modal-description">react-transiton-group animates me.</p>
+                      <h2 id="transition-modal-title">inscripción</h2>
+                      <p id="transition-modal-description">¿Esta seguro que desea inscribirse en este curso?</p>
+                      <Button size="small" color="primary" onClick={sayHello}>  
+                          Inscribirse
+                      </Button>
                     </div>
                   </Fade>
                 </Modal>
