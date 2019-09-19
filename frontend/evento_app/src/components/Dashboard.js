@@ -28,6 +28,7 @@ import { Route, BrowserRouter } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import ModificarPerfil from './ModificarPerfil';
+import DetalleCurso from './DetalleCurso';
 
 function Firma() {
   return (
@@ -316,9 +317,11 @@ export default function Dashboard(props) {
             { /* Esto despues se mejora */ }
             
             <Route exact path="/" component={Inicio}/>
+
             <Route path="/cursos" render={() => <Cursos estaLogueado={props.estaLogueado}/>}/>
             <Route path="/mi_curso" render={() => <MisCursos documento={props.documento}/>}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin} estaLogueado={props.estaLogueado}/>}/>
+            <Route path="/detalle_curso/:id" component={DetalleCurso}/>
             <Route path="/registrarse" render={() => <SignUp handleSignUp={props.handleSignUp} errores={props.erroresSignup}/>}/>
             <Route path="/modificar_perfil" render={() => <ModificarPerfil handleModificarPerfil={props.handleModificarPerfil} 
             errores={props.erroresModificacion}
