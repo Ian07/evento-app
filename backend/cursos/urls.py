@@ -6,7 +6,7 @@ from cursos.views.charlas import *
 
 urlpatterns = [
     path('cursos/', ListCreateCursosView.as_view(), name="cursos-list-create"),
-    path('cursos/<int:id>/', CursoDetailView.as_view(), name="cursos-detail"),
+    path('cursos/<int:pk>/', CursoDetailView.as_view(), name="cursos-detail"),
     path('cursos/<int:id>/profesores/', ProfesoresList.as_view(), name="curso-profesores-list"),
     path('cursos/<int:id>/alumnos/', AlumnosList.as_view(), name="curso-alumnos-list"),
     path('cursos/<int:id>/clases/', ClasesList.as_view(), name="curso-clases-list"),

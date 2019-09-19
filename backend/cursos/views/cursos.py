@@ -61,21 +61,10 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CursoSerializer
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        try:
-            curso = self.queryset.get(id=kwargs["id"])
-            return Response(CursoSerializer(curso).data)
-        except Curso.DoesNotExist:
-            return Response(
-                data={
-                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
-                },
-                status=status.HTTP_404_NOT_FOUND
-            ) 
-
+    
     def put(self, request, *args, **kwargs):
         try:
-            curso = self.queryset.get(id=kwargs["id"])
+            curso = self.queryset.get(id=kwargs["pk"])
             serializer = CursoSerializer()
             curso_modificado = serializer.update(curso, request.data)
 
@@ -101,7 +90,7 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
         except Curso.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
+                    "error": f"No existe el curso con id: '{kwargs['pk']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )
@@ -122,13 +111,13 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         try:
-            curso = self.queryset.get(id=kwargs["id"])
+            curso = self.queryset.get(id=kwargs["pk"])
             curso.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Curso.DoesNotExist:
             return Response(
                 data={
-                    "error": f"No existe el curso con id: '{kwargs['id']}'.",
+                    "error": f"No existe el curso con id: '{kwargs['pk']}'.",
                 },
                 status=status.HTTP_404_NOT_FOUND
             )    
