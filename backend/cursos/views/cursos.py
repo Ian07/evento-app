@@ -65,19 +65,19 @@ class CursoDetailView(generics.RetrieveUpdateDestroyAPIView):
     def put(self, request, *args, **kwargs):
         try:
             curso = self.queryset.get(id=kwargs["pk"])
-            if request.POST.get('add_doc_profesor'):
+            if 'add_doc_profesor' in request.data:
                 profesor = Profesor.objects.get(persona=request.data["add_doc_profesor"])
                 curso.profesores.add(profesor)
 
-            if request.POST.get('remove_doc_profesor'):
+            if 'remove_doc_profesor' in request.data:
                 profesor = Profesor.objects.get(persona=request.data["remove_doc_profesor"])
                 curso.profesores.remove(profesor)
 
-            if request.POST.get('add_doc_alumno'):
+            if 'add_doc_alumno' in request.data:
                 alumno = Alumno.objects.get(persona=request.data["add_doc_alumno"])
                 curso.alumnos.add(alumno)  
             
-            if request.POST.get('remove_doc_alumno'):
+            if 'remove_doc_alumno' in request.data:
                 alumno = Alumno.objects.get(persona=request.data["remove_doc_alumno"])
                 curso.alumnos.remove(alumno)  
             curso.save()
