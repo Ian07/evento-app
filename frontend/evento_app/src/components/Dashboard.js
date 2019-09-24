@@ -326,7 +326,9 @@ export default function Dashboard(props) {
             <Route path="/modificar_perfil" render={() => <ModificarPerfil handleModificarPerfil={props.handleModificarPerfil} 
             errores={props.erroresModificacion}
             nombreUsuario={props.nombreUsuario}
-            emailUsuario={props.emaiDlUsuario} />}/>
+            emailUsuario={props.emailUsuario} 
+            estaLogueado={props.estaLogueado}
+            />}/>
           </Container>
           <Firma />
         </main>

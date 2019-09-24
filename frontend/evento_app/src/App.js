@@ -47,6 +47,7 @@ class App extends Component {
         if(res.status === 200){
             res.json().then(json => {
               localStorage.setItem('token', json.access);
+              localStorage.setItem('documento', json.documento);
               this.setState({
                 estaLogueado: true,
                 nombreUsuario: json.username,
@@ -73,6 +74,7 @@ class App extends Component {
       .then(json => {
         if( ! json.error){
           localStorage.setItem('token', json.token.access);
+          localStorage.setItem('documento', json.persona);
           this.setState({
             estaLogueado: true,
             nombreUsuario: json.username,
