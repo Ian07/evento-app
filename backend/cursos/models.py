@@ -27,7 +27,10 @@ class Encuentro(models.Model):
 
 class Clase(Encuentro):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, related_name='clases')
-    presentes = models.ManyToManyField(Alumno, related_name="asistencias", db_table="asistencias")
+    presentes = models.ManyToManyField(Alumno, related_name="asistencias", db_table="asistencias", blank=True)
+
+    def __str__(self):
+        return f"{self.curso} - {self.dia} - {self.hora_inicio} - {self.aula}"
 
     class Meta:
         db_table = 'clases'
