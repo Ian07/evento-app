@@ -29,6 +29,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import ModificarPerfil from './ModificarPerfil';
 import DetalleCurso from './DetalleCurso';
+import Asistencia from './Asistencia';
+import TablaAsistencia from './TablaAsistencia';
 
 function Firma() {
   return (
@@ -322,6 +324,7 @@ export default function Dashboard(props) {
             <Route path="/mi_curso" render={() => <MisCursos documento={props.documento}/>}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin} estaLogueado={props.estaLogueado}/>}/>
             <Route path="/detalle_curso/:id" component={DetalleCurso}/>
+            <Route path="/asistencia" component={Asistencia}/>
             <Route path="/registrarse" render={() => <SignUp handleSignUp={props.handleSignUp} errores={props.erroresSignup}/>}/>
             <Route path="/modificar_perfil" render={() => <ModificarPerfil handleModificarPerfil={props.handleModificarPerfil} 
             errores={props.erroresModificacion}

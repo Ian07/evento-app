@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Typography from '@material-ui/core/Typography'
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button'
-
+import Asistencia from './Asistencia';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -37,6 +37,9 @@ const DetalleCurso = ({match}) => {
     const [cursos, setCursos] = React.useState([]);
     const [curso, setCurso] = React.useState([]);
     const [redirect, setRedirect] = React.useState(false);
+    const [esProfesor, setProfesor] = React.useState([]);
+    const [clases, setClases] = React.useState([]);
+
 
     const handleOpen = () => {
       setOpen(true);
@@ -77,6 +80,28 @@ const DetalleCurso = ({match}) => {
         setCursos(json);
       })
 
+      fetch('http://192.168.1.43:8000/api/v1/profesores/'+ localStorage.getItem('documento'),{
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+        }
+      })
+      .then(res => res.json())
+      .then(json => {
+        setProfesor(json);
+      })
+
+      fetch(`http://192.168.1.43:8000/api/v1/cursos/${match.params.id}/clases`,{
+        method: 'GET',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+        }
+      })
+      .then(res => res.json())
+      .then(json => {
+        setClases(json);
+      })
+
     }, []);
 
     const inscribirse = () => {
@@ -105,7 +130,6 @@ const DetalleCurso = ({match}) => {
           Authorization: `JWT ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
         },
-        //body: `{"remove_doc_alumno":${localStorage.getItem('documento')}}`
         body: `{"remove_doc_alumno":38800940}`
       })
       .then(res => {
@@ -136,14 +160,17 @@ const DetalleCurso = ({match}) => {
             </Typography>
             </CardContent>
             <CardActions>
-                {cursos.find( c => c.id === curso.id)?
-                  <button type="button" onClick={handleOpen_des}>
-                    desinscribirse
-                  </button>
+                {esProfesor ?
+                  <Asistencia clases={clases} curso={curso}/>
                 :
-                  <button type="button" onClick={handleOpen}>
-                    inscribirse
-                  </button>
+                  cursos.find( c => c.id === curso.id)?
+                    <button type="button" onClick={handleOpen_des}>
+                      desinscribirse
+                    </button>
+                  :
+                    <button type="button" onClick={handleOpen}>
+                      inscribirse
+                    </button>
                 }
                 <Modal
                   aria-labelledby="transition-modal-title"
