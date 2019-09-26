@@ -37,7 +37,7 @@ const DetalleCurso = ({match}) => {
     const [cursos, setCursos] = React.useState([]);
     const [curso, setCurso] = React.useState([]);
     const [redirect, setRedirect] = React.useState(false);
-    const [esProfesor, setProfesor] = React.useState([]);
+    const [esProfesor, setProfesor] = React.useState(false);
     const [clases, setClases] = React.useState([]);
 
 
@@ -80,7 +80,7 @@ const DetalleCurso = ({match}) => {
         setCursos(json);
       })
 
-      fetch('http://192.168.1.43:8000/api/v1/profesores/'+ localStorage.getItem('documento'),{
+      fetch(`http://192.168.1.43:8000/api/v1/cursos/${match.params.id}/profesores`,{
         method: 'GET',
         headers: {
           Authorization: `JWT ${localStorage.getItem('token')}`,
@@ -88,7 +88,11 @@ const DetalleCurso = ({match}) => {
       })
       .then(res => res.json())
       .then(json => {
-        setProfesor(json);
+        if(json.find(e => e.persona == localStorage.getItem('documento') )){
+          setProfesor(true);
+        }else{
+          setProfesor(false);
+        }
       })
 
       fetch(`http://192.168.1.43:8000/api/v1/cursos/${match.params.id}/clases`,{

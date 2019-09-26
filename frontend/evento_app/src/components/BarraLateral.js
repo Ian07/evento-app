@@ -43,14 +43,6 @@ class BarraLateral extends React.Component{
         {
           this.props.estaLogueado ?
           <List onClick={this.props.cerrarDrawer}>
-            <Link to="/asistencia">
-              <ListItem button>
-                <ListItemIcon>
-                  <AccoutBoxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Asistencia" />
-              </ListItem>
-            </Link>
             <Link to="/modificar_perfil">
               <ListItem button>
                 <ListItemIcon>

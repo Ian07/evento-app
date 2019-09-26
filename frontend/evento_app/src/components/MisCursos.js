@@ -3,6 +3,9 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CursoGrid from './CursoGrid';
+import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -104,18 +107,37 @@ export function Inicio(props) {
       })
     }, []);
 
-
-    return(
+    if(! props.estaLogueado){
+      return <Redirect to="/"/>
+    }else if(cursos.length == 0){  
+      return(
         <div>
           <Typography variant="h3" component="h3" color="inherit" gutterBottom align="center">
             ¡Cursos en los que estoy inscripto!
           </Typography>
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
-            Las clases empiezan el 10 de Septiembre
+            No te encuentras inscripto a ningún curso.
+            <Link to={'/cursos'}>
+              <Button size="small" color="primary">
+                  ¡Inscribite!
+              </Button>
+            </Link>
           </Typography>
-          <CursoGrid cursos={cursos}></CursoGrid>
         </div>
-    );
+      );
+    }else{
+      return(
+          <div>
+            <Typography variant="h3" component="h3" color="inherit" gutterBottom align="center">
+              ¡Cursos en los que estoy inscripto!
+            </Typography>
+            <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
+              Las clases empiezan el 10 de Septiembre
+            </Typography>
+            <CursoGrid cursos={cursos}></CursoGrid>
+          </div>
+      );
+    }
 }
 
 export default Inicio;

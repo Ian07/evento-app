@@ -69,12 +69,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          
         </TableCell>
         {headCells.map(headCell => (
           <TableCell
@@ -140,7 +135,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, dia } = props;
 
   return (
     <Toolbar
@@ -151,11 +146,11 @@ const EnhancedTableToolbar = props => {
       <div className={classes.title}>
         {numSelected > 0 ? (
           <Typography color="inherit" variant="subtitle1">
-            {numSelected} presentes
+            {numSelected} presentes el dia {dia}
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Asistencia Alumnos
+            Asistencia Alumnos el dia {dia}
           </Typography>
         )}
       </div>
@@ -221,6 +216,9 @@ export default function EnhancedTable(props) {
         setAlumnos(json);
       })
 
+
+      setSelected(props.clase.presentes.map(p => p.documento))
+
   }, [props.curso]);
 
   const handleRequestSort = (event, property) => {
@@ -256,6 +254,26 @@ export default function EnhancedTable(props) {
     }
 
     setSelected(newSelected);
+
+    if (selectedIndex === -1) { //No esta, es un evento de seleccion
+      fetch(`http://192.168.1.43:8000/api/v1/clases/${props.clase.id}/`,{
+        method: 'PUT',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: `{"add_doc_alumno":` + documento + `}`
+      })
+    }else{                      //Estaba, es un evento de deseleccion
+      fetch(`http://192.168.1.43:8000/api/v1/clases/${props.clase.id}/`,{
+        method: 'PUT',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: `{"remove_doc_alumno":` + documento + `}`
+      })
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -278,7 +296,7 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} dia={props.clase.dia} />
         <div className={classes.tableWrapper}>
           <Table
             className={classes.table}
