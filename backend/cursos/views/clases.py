@@ -69,15 +69,15 @@ class ClaseDetailView(generics.RetrieveUpdateDestroyAPIView):
             serializer = ClaseSerializer()
             clase_modificada = serializer.update(clase, request.data)
             
-            if request.POST.get('id_curso'):
+            if 'id_curso' in request.data:
                 obj_curso = Curso.objects.get(id=request.data["id_curso"])
                 clase_modificada.curso = obj_curso
 
-            if request.POST.get('add_doc_alumno'):
+            if 'add_doc_alumno' in request.data:
                 alumno = Alumno.objects.get(persona=request.data["add_doc_alumno"])
                 clase_modificada.presentes.add(alumno) 
 
-            if request.POST.get('remove_doc_alumno'):
+            if 'remove_doc_alumno' in request.data:
                 alumno = Alumno.objects.get(persona=request.data["remove_doc_alumno"])
                 clase_modificada.presentes.remove(alumno) 
 
