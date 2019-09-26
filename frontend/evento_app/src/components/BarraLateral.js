@@ -50,7 +50,7 @@ class BarraLateral extends React.Component{
                 </ListItemIcon>
                 <ListItemText primary="Modificar Perfil" />
               </ListItem>
-            </Link>  
+            </Link>
             <Link to="/mi_curso">
               <ListItem button>
                 <ListItemIcon>

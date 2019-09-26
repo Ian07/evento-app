@@ -29,6 +29,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import { Link } from 'react-router-dom';
 import ModificarPerfil from './ModificarPerfil';
 import DetalleCurso from './DetalleCurso';
+import Asistencia from './Asistencia';
+import TablaAsistencia from './TablaAsistencia';
 
 function Firma() {
   return (
@@ -212,14 +214,6 @@ export default function Dashboard(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="Show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="Account of current user"
@@ -260,11 +254,6 @@ export default function Dashboard(props) {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="Show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               edge="end"
               aria-label="Account of current user"
@@ -319,7 +308,7 @@ export default function Dashboard(props) {
             <Route exact path="/" component={Inicio}/>
 
             <Route path="/cursos" render={() => <Cursos estaLogueado={props.estaLogueado}/>}/>
-            <Route path="/mi_curso" render={() => <MisCursos documento={props.documento}/>}/>
+            <Route path="/mi_curso" render={() => <MisCursos documento={props.documento} estaLogueado={props.estaLogueado}/>}/>
             <Route path="/iniciar_sesion" render={() => <SignIn handleLogin={props.handleLogin} errores={props.erroresLogin} estaLogueado={props.estaLogueado}/>}/>
             <Route path="/detalle_curso/:id" component={DetalleCurso}/>
             <Route path="/registrarse" render={() => <SignUp handleSignUp={props.handleSignUp} errores={props.erroresSignup}/>}/>
