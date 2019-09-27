@@ -10,6 +10,7 @@ class PersonaSerializer(serializers.ModelSerializer):
         fields = ("documento", "nombre", "apellido")
 
 class AlumnoSerializer(serializers.ModelSerializer):
+    persona = PersonaSerializer(read_only=True)
     class Meta:
         model = Alumno
         fields = ("id", "TIPO", "ROLNAME", "persona",)

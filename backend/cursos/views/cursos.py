@@ -150,5 +150,5 @@ class ClasesList(APIView):
     def get(self, request, *args, **kwargs):
         id_curso = kwargs['id']
         id_clases = Curso.objects.filter(id=id_curso).values_list('clases', flat=True)
-        clases = Clase.objects.filter(id__in=id_clases)
+        clases = Clase.objects.filter(id__in=id_clases).order_by('dia')
         return Response(ClaseSerializer(clases, many=True).data)
