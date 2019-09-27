@@ -3,7 +3,8 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import afiche from './afiche.png'
-import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card'
+import CardMedia from '@material-ui/core/CardMedia'
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -110,11 +111,9 @@ export function Inicio() {
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
             Del 16 al 20 de Septiembre
           </Typography>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <img src={afiche} style={{paddingLeft: '25%'}} alt="Afiche" />;
-            </Grid>
-        </Grid>
+          <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
+            <img src={afiche} width="50%" height="50%" />
+          </Typography>
         </div>
     );
 }

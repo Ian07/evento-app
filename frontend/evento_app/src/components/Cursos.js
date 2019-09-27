@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import CursoGrid from './CursoGrid';
 import { Redirect } from 'react-router-dom';
 
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
     root: {
