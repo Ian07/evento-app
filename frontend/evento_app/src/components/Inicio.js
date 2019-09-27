@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import afiche from './Afiche.png'
+import afiche from './afiche.png'
+import Grid from '@material-ui/core/Grid';
 
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
@@ -109,7 +110,11 @@ export function Inicio() {
           <Typography variant="h6" component="h6" color="inherit" gutterBottom align="center">
             Del 16 al 20 de Septiembre
           </Typography>
-          <img src={afiche} alt="Afiche" />;
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <img src={afiche} style={{paddingLeft: '25%'}} alt="Afiche" />;
+            </Grid>
+        </Grid>
         </div>
     );
 }

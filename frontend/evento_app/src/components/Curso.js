@@ -32,7 +32,7 @@ const Curso = (props) => {
       <div>
           { props.curso ? (
               <Card>
-                  <CardMedia style={{height:0, paddingTop: '56.25%'}}
+                  <CardMedia style={{height:0, paddingTop: '100%'}}
                   image={props.curso.imagen}
                   title={props.curso.nombre}
                   />
